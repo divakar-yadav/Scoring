@@ -1,0 +1,30 @@
+.checkbox-list {
+    font-family: Arial, sans-serif;
+  }
+  
+  .checkbox-list-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #000;
+}
+  
+  .checkbox-list-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .checkbox-list-item {
+    margin-bottom: 0.5em;
+  }
+  
+  .checkbox-input {
+    margin-right: 0.5em;
+  }
+  
+  .checkbox-label {
+    font-size: 14px;
+    color: #6b0ec2;
+}
+  

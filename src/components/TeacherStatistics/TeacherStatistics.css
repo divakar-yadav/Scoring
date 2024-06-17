@@ -1,0 +1,21 @@
+.teacher-statistics {
+    width: 400px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .stat-label {
+    color: #000;
+  }
+  
+  .stat-value {
+    font-weight: bold;
+  }
+  

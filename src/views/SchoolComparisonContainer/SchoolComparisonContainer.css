@@ -1,0 +1,30 @@
+.school-comparison-container {
+    width: 75%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+  
+  .search-boxes {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .search-box {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+  }
+  
+  .search-box label {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .search-box input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  

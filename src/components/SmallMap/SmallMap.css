@@ -1,0 +1,17 @@
+/* SmallMap.css */
+
+/* Customize the Leaflet zoom control buttons */
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+    width: 20px; /* Set the width */
+    height: 20px; /* Set the height */
+    font-size: 14px; /* Set the font size */
+}
+
+.leaflet-control-zoom-in {
+    background-position: 4px 4px; /* Adjust the icon position */
+}
+
+.leaflet-control-zoom-out {
+    background-position: 4px 4px; /* Adjust the icon position */
+}

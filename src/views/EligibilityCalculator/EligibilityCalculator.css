@@ -1,0 +1,23 @@
+
+.eligibility-calculator {
+    text-align: center;
+    padding: 20px;
+    width: 70%;
+    align-self: center;
+}
+.color-map {
+    margin-top: 20px;
+}
+
+.color-map div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.color-map span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
