@@ -19,7 +19,7 @@ const SchoolDetail = ( )=> {
           <div className='school_name'>{row['School Name']}</div>
           <div className='school_type'>{row['School Type']}</div>
           <div className='school_type'>{row['City']}</div>
-          <div className='school_type'>{row['Locale description']}</div>
+          {/* <div className='school_type'>{row['Locale description']}</div> */}
           <MathematicsProficiency row = {row}/>
           <ElaProficiency row = {row} />
           {/* <GenderEnrollmentChart/> */}

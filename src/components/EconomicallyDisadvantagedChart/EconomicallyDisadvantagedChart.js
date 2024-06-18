@@ -76,14 +76,14 @@ const EconomicallyDisadvantagedChart = ({ row }) => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }} className='economically_disadvantaged'>
+      <div style={{ marginLeft: '20px', fontSize: '20px' }} className='economically_disadvantaged_title'>
+        Economically disadvantaged students
+      </div>
       <div style={{ width: '200px', height: '200px' }}>
         <HighchartsReact
           highcharts={Highcharts}
           options={options}
         />
-      </div>
-      <div style={{ marginLeft: '20px', fontSize: '20px' }}>
-        Economically disadvantaged students
       </div>
     </div>
   );

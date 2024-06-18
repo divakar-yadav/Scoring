@@ -3,6 +3,8 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsMore from 'highcharts/highcharts-more';
 import SolidGauge from 'highcharts/modules/solid-gauge';
+import './EnglishLearners.css'
+
 
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
@@ -73,15 +75,15 @@ const EnglishLearners = ({ row }) => {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center' }} className='english_learners'>
+        <div style={{ marginLeft: '20px', fontSize: '20px' }} className='english_learners_title'>
+        English Learners
+      </div>
       <div style={{ width: '200px', height: '200px' }}>
         <HighchartsReact
           highcharts={Highcharts}
           options={options}
         />
-      </div>
-      <div style={{ marginLeft: '20px', fontSize: '20px' }}>
-        English Learners
       </div>
     </div>
   );

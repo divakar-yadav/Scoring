@@ -1,0 +1,10 @@
+.english_learners {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: start !important;
+    margin-top: 74px;
+}
+.english_learners_title{
+    font-weight: 600;
+}

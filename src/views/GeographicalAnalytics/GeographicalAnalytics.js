@@ -12,8 +12,8 @@ import { fromLonLat } from 'ol/proj';
 import { Icon, Style, Text, Fill, Stroke } from 'ol/style';
 import * as turf from '@turf/turf';
 import './GeographicalAnalytics.css';
-
-const GeographicalAnalytics = ({ calculatedData }) => {
+import school_gps from '../../assets/school_gps.png'
+const GeographicalAnalytics = ({ calculatedData, schoolNames }) => {
   useEffect(() => {
     const randomLatLon = () => {
       const lat = 42 + Math.random() * 3; // Latitudes between 42 and 45
@@ -21,7 +21,7 @@ const GeographicalAnalytics = ({ calculatedData }) => {
       return [lon, lat];
     };
 
-    const schoolPoints = calculatedData.map(school => {
+    const schoolPoints = calculatedData.filter(row => schoolNames.includes(row['School Name'])).map(school => {
       const [lon, lat] = randomLatLon();
       return {
         type: 'Feature',
@@ -51,24 +51,26 @@ const GeographicalAnalytics = ({ calculatedData }) => {
       });
       feature.setStyle(new Style({
         image: new Icon({
-          src: 'https://openlayers.org/en/latest/examples/data/icon.png',
-          scale: 0.05
+          src: school_gps,
+          scale: 0.3
         }),
         text: new Text({
-          text: `${school.properties.name.split(' ').map(word => word.charAt(0)).join('')}\nNon-linear score: ${school.properties.nonlinear.toFixed(2)}`,
-          offsetY: 40,
-          font: 'bold 12px Arial, sans-serif',
+          text: `${school.properties.name}`,
+          offsetY: 25,
+          font: '8px',
           fill: new Fill({
-            color: '#000'
+            color: '#fff'
           }),
-          stroke: new Stroke({
-            color: '#fff',
-            width: 2
-          }),
+          // stroke: new Stroke({
+          //   color: '#fff',
+          //   width: 2
+          // }),
           backgroundFill: new Fill({
-            color: 'rgba(255, 255, 255, 0.7)'
+            color: '#3e4ee1'
           }),
-          padding: [3, 3, 3, 3]
+          padding: [3, 40, 3, 40],
+          maxWidth: '300px',
+          wrap: 'wrap'
         })
       }));
       return feature;
@@ -81,8 +83,8 @@ const GeographicalAnalytics = ({ calculatedData }) => {
     });
     hullFeature.setStyle(new Style({
       stroke: new Stroke({
-        color: 'rgba(0, 0, 255, 0.5)',
-        width: 2
+        color: '#3e4ee1',
+        width: 3
       })
     }));
 
@@ -103,13 +105,13 @@ const GeographicalAnalytics = ({ calculatedData }) => {
         vectorLayer
       ],
       view: new View({
-        center: fromLonLat([-89.4012, 43.0731]), // Centered on Madison, WI
-        zoom: 6
+        center: fromLonLat([-88.0103937245483, 42.9768124833109]), // Centered on Madison, WI
+        zoom: 9
       })
     });
 
     return () => map.setTarget(null);
-  }, [calculatedData]);
+  }, [calculatedData, schoolNames]);
 
   return (
     <div>

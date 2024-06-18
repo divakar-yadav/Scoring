@@ -22,16 +22,20 @@ import CheckboxList from '../../components/CheckboxList/CheckboxList';
 
 const HomePage = () => {
     const [fileData, setFileData] = useState([]);
-    const [totalSchools, setTotalSchools] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [filters, setFilters] = useState({
-        schoolType: '',
+        schoolType: [],
         schoolName: '',
         gradeLevel: '',
         location: '',
         locationType: ''
     });
+    const [sorting, setSorting] = useState({
+        sortBy: ''
+    });
     const [filterChips, setFilterChips] = useState([]);
+    const [schoolTypes, setSchoolTypes] = useState([]);
+    const [currentTab, setCurrentTab] = useState('Home');
 
     const colors = {
         'Significantly Exceeds Expectations': 'green',
@@ -74,13 +78,14 @@ const HomePage = () => {
         "Golda Meir School"
     ];
 
-    const options = ['Elementary School', 'High School', 'Elementary/Secondary School', 'Middle School'];
-
     const [loading, setLoading] = useState(false);
 
     const rowsPerPage = 10;
     const totalPages = Math.ceil(fileData.length / rowsPerPage);
 
+    useEffect(()=>{
+
+    },[filters])
     const handleClick = (event, page) => {
         event.preventDefault();
         setCurrentPage(page);
@@ -100,42 +105,78 @@ const HomePage = () => {
         }
     };
 
-    const handleFilterChange = (e) => {
-        const { name, value } = e.target;
-        setFilters({ ...filters, [name]: value });
+    const handleFilterChange = (name, value) => {
+        const newFilters = { ...filters };
+        if (name === 'schoolType') {
+            if (newFilters.schoolType.includes(value)) {
+                newFilters.schoolType = newFilters.schoolType.filter(type => type !== value);
+            } else {
+                newFilters.schoolType.push(value);
+            }
+        } else {
+            newFilters[name] = value;
+        }
+        // return newFilters;
+        setFilters(newFilters);
     };
+
+    const applySorting = (data) => {
+        if (sorting.sortBy === 'Alphabetically (A-Z)') {
+            return data.sort((a, b) => a['School Name'].localeCompare(b['School Name']));
+        } else if (sorting.sortBy === 'Alphabetically (Z-A)') {
+            return data.sort((a, b) => b['School Name'].localeCompare(a['School Name']));
+        } else if (sorting.sortBy === 'Enrollment (low to high)') {
+            return data.sort((a, b) => a['School Enrollment'] - b['School Enrollment']);
+        } else if (sorting.sortBy === 'Enrollment (high to low)') {
+            return data.sort((a, b) => b['School Enrollment'] - a['School Enrollment']);
+        } else if (sorting.sortBy === 'Non Linear Score (high to low)') {
+            return data.sort((a, b) => b['nonlinear'] - a['nonlinear']);
+        } else if (sorting.sortBy === 'Non Linear Score (low to high)') {
+            return data.sort((a, b) => a['nonlinear'] - b['nonlinear']);
+        } else if (sorting.sortBy === 'DPI (low to high)') {
+            return data.sort((a, b) => a['Overall Accountability Score'] - b['Overall Accountability Score']);
+        } else if (sorting.sortBy === 'DPI (high to low)') {
+            return data.sort((a, b) => b['Overall Accountability Score'] - a['Overall Accountability Score']);
+        } else {
+            return data;
+        }
+    };
+    const handleSorting = (e) => {
+        setSorting({sortBy:e.target.value})
+    }
 
     const handleFileUpload = (uploadedData) => {
         setLoading(true);
         setTimeout(() => {
             setFileData(uploadedData);
             setLoading(false);
+
+            const uniqueSchoolTypes = [...new Set(uploadedData.map(row => row['School Type']))];
+            setSchoolTypes(uniqueSchoolTypes);
         }, 4000);
     };
 
     const aggregateSchoolsByType = (data) => {
-        const schoolTypes = ['Elementary School', 'Middle School', 'High School', 'Elementary/Secondary School'];
         const schools = [];
-    
+
         schoolTypes.forEach(type => {
             const filteredSchools = data.filter(row => row['School Type'] === type);
             if (filteredSchools.length > 0) {
                 schools.push(filteredSchools);
             }
         });
-    
+
         return schools;
     };
 
-    const filterSchool1 = (pipeline) => {
-        return fileData.filter(row => row['City'] === 'Milwaukee' || pipeline.includes(row['School Name']));
-    };
+    // const filterSchool1 = (pipeline) => {
+    //     return fileData.filter(row => row['City'] === 'Milwaukee' || pipeline.includes(row['School Name']));
+    // };
 
-    const filterData = () => {
-        return fileData.filter(row => {
+    const handlefilters = (data) => {
+        return data.filter(row => {
             return (
-                (row['Location'] === 'Milwaukee' || pipeline.includes(row['School Name'])) &&
-                (filters.schoolType ? row['School Type'] === filters.schoolType : true) &&
+                (filters.schoolType.length > 0 ? filters.schoolType.includes(row['School Type']) : true) &&
                 (filters.schoolName ? row['School Name'].toLowerCase().includes(filters.schoolName.toLowerCase()) : true) &&
                 (filters.gradeLevel ? row['Grade Level'] === filters.gradeLevel : true) &&
                 (filters.location ? row['Location'].toLowerCase().includes(filters.location.toLowerCase()) : true) &&
@@ -149,36 +190,36 @@ const HomePage = () => {
         return val;
     };
 
-    const calculateTotalSum = (arr) => {
-        let totalSum = 0;
-        for (let i = 0; i < arr.length; i++) {
-            totalSum += parseFloat(arr[i]);
-        }
-        return totalSum;
-    };
+    // const calculateTotalSum = (arr) => {
+    //     let totalSum = 0;
+    //     for (let i = 0; i < arr.length; i++) {
+    //         totalSum += parseFloat(arr[i]);
+    //     }
+    //     return totalSum;
+    // };
 
-    const toStd1 = (data, key) => {
-        const filteredData = data.filter(row => !isNaN(parseFloat(row[key])));
-    
-        const values = filteredData.map(row => parseFloat(row[key]));
-        const mean = calculateTotalSum(values) / values.length;
-        const std = Math.sqrt(calculateTotalSum(values.map(x => Math.pow(x - mean, 2))) / values.length);
-    
-        return data.map(row => {
-            const value = parseFloat(row[key]);
-            if (isNaN(value)) {
-                return row;
-            }
-            return {
-                ...row,
-                [`${key}_score`]: (value - mean) / std
-            };
-        });
-    };
+    // const toStd1 = (data, key) => {
+    //     const filteredData = data.filter(row => !isNaN(parseFloat(row[key])));
+
+    //     const values = filteredData.map(row => parseFloat(row[key]));
+    //     const mean = calculateTotalSum(values) / values.length;
+    //     const std = Math.sqrt(calculateTotalSum(values.map(x => Math.pow(x - mean, 2))) / values.length);
+
+    //     return data.map(row => {
+    //         const value = parseFloat(row[key]);
+    //         if (isNaN(value)) {
+    //             return row;
+    //         }
+    //         return {
+    //             ...row,
+    //             [`${key}_score`]: (value - mean) / std
+    //         };
+    //     });
+    // };
 
     const toStd = (data, key) => {
         const filteredData = data.filter(row => !isNaN(parseFloat(row[key])));
-        
+
         const values = filteredData.map(row => parseFloat(row[key]));
         const sum = values.reduce((acc, num) => acc + parseFloat(num), 0);
         const mean = sum / values.length;
@@ -260,19 +301,19 @@ const HomePage = () => {
 
     const filterDataOverAll = (data, pipeline) => {
         let filteredData = data.filter(row => row['City'] === 'Milwaukee' || pipeline.includes(row['School Name']));
-    
+
         const features = [
             'School Name', 'Overall Accountability Score', 'Overall Accountability Rating',
-            'School Type', 'School Enrollment', 'School ELA Achievement Score', 
-            'School Mathematics Achievement Score', 'School ELA Growth Score', 
-            'School Mathematics Growth Score', 'School On-Track to Graduation Score', 
+            'School Type', 'School Enrollment', 'School ELA Achievement Score',
+            'School Mathematics Achievement Score', 'School ELA Growth Score',
+            'School Mathematics Growth Score', 'School On-Track to Graduation Score',
             'Percent Economically Disadvantaged'
         ];
-    
+
         filteredData = filteredData.filter(row => {
             return features.every(feature => row.hasOwnProperty(feature) && row[feature] !== null && row[feature] !== undefined && row[feature] !== 'NA');
         });
-    
+
         const uniqueData = [];
         const seenNames = new Set();
         filteredData.forEach(row => {
@@ -282,21 +323,23 @@ const HomePage = () => {
             }
         });
         filteredData = uniqueData;
-    
+
         filteredData = filteredData.filter(row => {
             const percentDisadvantaged = parseFloat(row['Percent Economically Disadvantaged']);
             return (percentDisadvantaged >= 0.5) || (row['School Name'] === 'Golda Meir School');
         });
-    
+
         return filteredData;
     };
 
     const renderCardData = () => {
         const filteredData = filterDataOverAll(fileData, pipeline);
         const calculatedData = addCalculatedFields(filteredData);
+        const filterAppliedData  = handlefilters(calculatedData);
+        const sortedData  = applySorting(filterAppliedData);
         const startIndex = (currentPage - 1) * rowsPerPage;
         const endIndex = startIndex + rowsPerPage;
-        return { paginatedData: calculatedData.slice(startIndex, endIndex), calculatedData: calculatedData };
+        return { paginatedData: sortedData.slice(startIndex, endIndex), calculatedData: sortedData, calculatedData2: calculatedData };
     };
 
     const renderPagination = () => {
@@ -379,34 +422,49 @@ const HomePage = () => {
                             {fileData.length > 0 && (
                                 <div className='schools-utilities-wrapper'>
                                     <Link to='/'>
+                                    <div className='schools-utilities-compare-wrapper' onClick={()=>setCurrentTab('Home')}>
                                         <div className='schools-utilities-compare'>
                                             <img className='schools-utilities-compare-icon' src={home} />
                                             <span className='schools-utilities-compare-text'>Home</span>
                                         </div>
+                                        {currentTab === 'Home' ? <div className='active_tab'></div> : null}
+                                        </div>
                                     </Link>
                                     <Link to='/compare-schools'>
-                                        <div className='schools-utilities-compare'>
+                                    <div>
+                                    <div className='schools-utilities-compare' onClick={()=>setCurrentTab('Compare Schools')}>
                                             <img className='schools-utilities-compare-icon' src={schools} />
                                             <span className='schools-utilities-compare-text'>Compare Schools</span>
                                         </div>
+                                        {currentTab === 'Compare Schools' ? <div className='active_tab'></div> : null}
+                                    </div>
                                     </Link>
                                     <Link to='/calculate-elgibility'>
-                                        <div className='schools-utilities-calculate'>
+                                    <div>
+                                    <div className='schools-utilities-calculate' onClick={()=>setCurrentTab('Eligibility')}>
                                             <img className='schools-utilities-calculate-icon' src={calculator} />
                                             <span className='schools-utilities-calculate-text'>Eligibility</span>
                                         </div>
+                                        {currentTab === 'Eligibility' ? <div className='active_tab'></div> : null}
+                                    </div>
                                     </Link>
                                     <Link to='/geographical-analytics'>
-                                        <div className='schools-utilities-geo'>
+                                    <div>
+                                    <div className='schools-utilities-geo' onClick={()=>setCurrentTab('Geographical analytics')}>
                                             <img className='schools-utilities-geo-icon' src={geo} />
                                             <span className='schools-utilities-geo-text'>Geographical analytics</span>
                                         </div>
+                                        {currentTab === 'Geographical analytics' ? <div className='active_tab'></div> : null}
+                                    </div>
                                     </Link>
                                     <Link to='/general-analytics'>
-                                        <div className='schools-utilities-analytics'>
+                                    <div>
+                                    <div className='schools-utilities-analytics' onClick={()=>setCurrentTab('General Analysis')}>
                                             <img className='schools-utilities-analytics-icon' src={analysis} />
                                             <span className='schools-utilities-analytics-text'>General Analysis</span>
                                         </div>
+                                        {currentTab === 'General Analysis' ? <div className='active_tab'></div> : null}
+                                    </div>
                                     </Link>
                                 </div>
                             )}
@@ -419,7 +477,7 @@ const HomePage = () => {
                                             <div className='filter-header'>
                                                 <div className='filter-header-wrapper'>
                                                     <div className='filter-header-chips-result-count-wrapper'>
-                                                        <div className='filter-header-total-no-result'>No of schools</div>
+                                                        <div className='filter-header-total-no-result'>No of schools <span>{renderCardData().calculatedData.length}</span></div>
                                                         <div className='filter-header-chips'>
                                                             {filterChips.map((chip, index) => (
                                                                 <div key={index} className='chip'>
@@ -431,34 +489,39 @@ const HomePage = () => {
                                                     </div>
                                                     <div className='filter-header-sort'>
                                                         <div className='filter-header-sort-text'>Sort By:</div>
-                                                        <select name="locationType" value={filters.locationType} onChange={handleFilterChange}>
-                                                            <option value="">{`Alphabetically (A-Z)`}</option>
-                                                            <option value="City">{`Alphabetically (Z-A)`}</option>
-                                                            <option value="Rural">{`Enrollment (low to high)`}</option>
-                                                            <option value="Town">{`Enrollment (high to low)`}</option>
+                                                        <select name="locationType" onChange={(e)=>handleSorting(e)}>
+                                                            <option value="Alphabetically (A-Z)">{`Alphabetically (A-Z)`}</option>
+                                                            <option value="Alphabetically (Z-A)">{`Alphabetically (Z-A)`}</option>
+                                                            <option value="Non Linear Score (low to high)">{`Non Linear Score (low to high)`}</option>
+                                                            <option value="Non Linear Score (high to low)">{`Non Linear Score (high to low)`}</option>
+                                                            <option value="DPI (low to high)">{`DPI (low to high)`}</option>
+                                                            <option value="DPI (high to low)">{`DPI (high to low)`}</option>
+                                                            <option value="Enrollment (low to high)">{`Enrollment (low to high)`}</option>
+                                                            <option value="Enrollment (high to low)">{`Enrollment (high to low)`}</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='school-cards-sidenav-wrapper'>
                                                 <div className='sidenav'>
-                                                    <CheckboxList title="I'm looking for School Type" options={options} />
+                                                    <CheckboxList title="I'm looking for School Type" options={schoolTypes} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
                                                 </div>
                                                 <div className='cards-container'>
-                                                    <div className="chip-filter-container">
+                                                    {/* <div className="chip-filter-container">
                                                         <div className="chip-filter" onClick={() => handleChipClick('National')}>National</div>
                                                         <div className="chip-filter" onClick={() => handleChipClick('Traditional')}>Traditional</div>
                                                         <div className="chip-filter" onClick={() => handleChipClick('Magnet')}>Magnet</div>
                                                         <div className="chip-filter" onClick={() => handleChipClick('Charter')}>Charter</div>
                                                         <div className="chip-filter" onClick={() => handleChipClick('STEM')}>STEM</div>
                                                         <div className="chip-filter" onClick={() => handleChipClick('Search by District')}>Search by District</div>
-                                                    </div>
+                                                    </div> */}
                                                     {renderCardData().paginatedData.map((row, rowIndex) => (
+                                                        <Link to="/school" state={JSON.stringify(row)}>
                                                         <div key={rowIndex} className="card">
                                                             <div className="card-content">
                                                                 <SmallMap lat={!isColumnBlank(row, 'Lat') ? row['Lat'] : 42.9768124833109} lng={!isColumnBlank(row, 'Long') ? row['Long'] : -88.0103937245483} />
                                                                 <div className='card-content-main-info'>
-                                                                    <Link to="/school" state={JSON.stringify(row)}>{row['School Name']}</Link>
+                                                                <a>{row['School Name']}</a>
                                                                     <div className='card-content-main-info-meta'>
                                                                         <div className='card-content-main-info-address'>{row['Location']}</div>
                                                                         <div className='card-content-main-info-school-type'>{row['School Type']}</div>
@@ -480,7 +543,11 @@ const HomePage = () => {
                                                                 <div className='ratings'></div>
                                                             </div>
                                                         </div>
+                                                        </Link>
                                                     ))}
+                                                    <div>
+                                                    {renderCardData().calculatedData.length === 0 ? <div className='no_data_found'>No data found</div> : null}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="pagination">
@@ -491,10 +558,10 @@ const HomePage = () => {
                                 </React.Fragment>
                             } />
                             <Route path="/school" element={<SchoolDetail />} />
-                            <Route exact path="/calculate-elgibility" Component={() => fileData.length > 0 && <EligibilityCalculator fileData={fileData} schoolNames={pipeline} />} />
-                            <Route exact path="/general-analytics" Component={() => fileData.length > 0 && <GeneralAnalytics data={fileData} />} />
-                            <Route exact path="/geographical-analytics" Component={() => fileData.length > 0 && <GeographicalAnalytics data={fileData} calculatedData={renderCardData().calculatedData} />} />
-                            <Route exact path="/compare-schools" Component={() => fileData.length > 0 && <SchoolComparisonContainer schools={fileData} />} />
+                            <Route path="/calculate-elgibility" element={fileData.length > 0 && <EligibilityCalculator fileData={fileData} schoolNames={pipeline} calculatedData = {renderCardData().calculatedData2}/>} />
+                            <Route path="/general-analytics" element={fileData.length > 0 && <GeneralAnalytics data={renderCardData().calculatedData2} />} />
+                            <Route path="/geographical-analytics" element={fileData.length > 0 && <GeographicalAnalytics data={fileData} schoolNames={pipeline} calculatedData={renderCardData().calculatedData} />} />
+                            <Route path="/compare-schools" element={fileData.length > 0 && <SchoolComparisonContainer schools={fileData} />} />
                         </Routes>
                     </div>
                 </Router>

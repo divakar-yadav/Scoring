@@ -1,3 +1,10 @@
-.open_enrolment{
+.open_enrolment {
     min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: start !important;
+    margin-top: 75px;
+}
+.open_enrolment_title{
+    font-weight: 600;
 }

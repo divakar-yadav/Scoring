@@ -75,14 +75,14 @@ const OpenEnrolment = ({ row }) => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }} className='open_enrolment'>
+      <div style={{ marginLeft: '20px', fontSize: '20px' }} className='open_enrolment_title'>
+      Open Enrolment
+      </div>
       <div style={{ width: '200px', height: '200px' }}>
         <HighchartsReact
           highcharts={Highcharts}
           options={options}
         />
-      </div>
-      <div style={{ marginLeft: '20px', fontSize: '20px' }}>
-      Open Enrolment
       </div>
     </div>
   );

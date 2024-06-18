@@ -3,11 +3,11 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import './EligibilityCalculator.css';
 
-const EligibilityCalculator = ({ fileData, schoolNames }) => {
+const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
     const [chartOptions1, setChartOptions1] = useState({});
-    const [chartOptions2, setChartOptions2] = useState({});
     useEffect(() => {
         if (fileData && schoolNames) {
+            console.log(fileData,"------fileData-------")
             processData(fileData, schoolNames);
         }
     }, [fileData, schoolNames]);
@@ -34,12 +34,14 @@ const EligibilityCalculator = ({ fileData, schoolNames }) => {
         ];
 
         const filteredData = data.filter(row => {
-            return features.every(feature => row[feature] !== null && row[feature] !== undefined);
+            return features.every(feature => row[feature] !== null && row[feature] !== undefined && row[feature] !== 'NA');
         });
+        console.log(filteredData,"------filteredData-------")
 
         const pipelineData = filteredData.filter(row => row['City'] === 'Milwaukee' || schoolNames.includes(row['School Name']));
+        console.log(pipelineData,"------pipelineData-------")
         const uniqueData = pipelineData.filter((row, index, self) => index === self.findIndex(t => t['School Name'] === row['School Name']));
-
+        console.log(uniqueData,"------uniqueData-------")
         const finalData = uniqueData.filter(row => row['Percent Economically Disadvantaged'] >= 0.5 || row['School Name'] === 'Golda Meir School');
 
         const rename = {
@@ -92,7 +94,9 @@ const EligibilityCalculator = ({ fileData, schoolNames }) => {
         //         <b>City:</b> ${row['City']}
         //     `
         // }));
-        const plotData1 = nonlinearData.filter(row => schoolNames.includes(row['School Name'])).map(row => ({
+        console.log(nonlinearData,"-----nonlinearData-----")
+        const plotData1 = calculatedData.filter(row => schoolNames.includes(row['School Name'])).map(row => ({
+
             x: row['Percent Economically Disadvantaged'] * 100,
             y: row['Overall Accountability Score'],
             color: colors[row['Overall Accountability Rating']],
@@ -100,7 +104,9 @@ const EligibilityCalculator = ({ fileData, schoolNames }) => {
             label: row['School Name'].charAt(0),
             additionalInfo: `
                 <b>School Name:</b> ${row['School Name']}<br>
-                <b>School Type:</b> ${row['School Type']}<br>
+                <b>School Name:</b> ${row['School Type']}<br>
+                <b>DPI Score:</b> ${row['Overall Accountability Score']}<br>
+                <b>Nonlinear Score :</b> ${row['nonlinear']}<br>
                 <b>Enrollment:</b> ${row['School Enrollment']}<br>
                 <b>American Indian or Alaskan Native:</b> ${(row['Percent American Indian or Alaskan Native'] * 100).toFixed(2)}%<br>
                 <b>Asian:</b> ${(row['Percent Asian'] * 100).toFixed(2)}%<br>
@@ -269,7 +275,7 @@ const EligibilityCalculator = ({ fileData, schoolNames }) => {
             }
         };
         setChartOptions1(options1);
-        setChartOptions2(options2);
+        // setChartOptions2(options2);
     };
 
     return (

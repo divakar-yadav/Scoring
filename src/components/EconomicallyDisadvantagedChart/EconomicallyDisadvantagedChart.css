@@ -1,3 +1,10 @@
-.economically_disadvantaged{
+.economically_disadvantaged {
     min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: start !important;
+    margin-top: 74px;
+}
+.economically_disadvantaged_title{
+    font-weight: 600;
 }

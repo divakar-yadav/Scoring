@@ -1,6 +1,5 @@
-
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    color: #475F7B;
+    color: #3e4ee1;
 }
 
 a, a:hover, a:focus {
@@ -48,7 +47,7 @@ a, a:hover, a:focus {
     margin: 0;
     font-size: 12px;
     font-weight: 600;
-    color: #893be7;
+    color: #3e4ee1;
 }
 .kb-file-upload {
     margin-bottom: 20px;

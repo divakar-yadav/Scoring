@@ -21,7 +21,7 @@ const MathematicsProficiency = ({ row }) => {
       type: 'column'
     },
     title: {
-      text: 'School vs State Percent Proficient Mathematics'
+      text: ''
     },
     xAxis: {
       categories: categories,
@@ -68,7 +68,10 @@ const MathematicsProficiency = ({ row }) => {
   };
 
   return (
-    <div>
+    <div className='MathematicsProficiency'>
+      <div className='MathematicsProficiency_title'>
+      School vs State Percent Proficient Mathematics
+      </div>
       <HighchartsReact
         highcharts={Highcharts}
         options={options}

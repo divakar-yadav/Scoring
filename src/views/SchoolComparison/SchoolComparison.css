@@ -18,11 +18,11 @@
   
   .school-comparison th {
     background-color: #f2f2f2;
-    font-weight: bold;
-  }
+    font-weight: 100;
+}
   
   .school-comparison tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #fff;
   }
   
   .school-comparison tr:hover {
@@ -32,13 +32,20 @@
   .school-comparison th {
     padding-top: 12px;
     padding-bottom: 12px;
-    background-color: #4CAF50;
-    color: white;
-  }
+    background-color: #fff;
+    color: #3e4ee1;
+}
   
-  .school-comparison {
-    max-width: 75%;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+.school-comparison {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.school-comparison h2 {
+  font-size: 18px;
 }

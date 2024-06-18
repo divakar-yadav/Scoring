@@ -1,3 +1,10 @@
-.student_disabilities{
+.student_disabilities {
     min-height: 350px;
+    display: flex;
+    margin-top: 75px;
+    flex-direction: column;
+    align-items: start !important;
+}
+.student_disabilities_title{
+    font-weight: 600;
 }

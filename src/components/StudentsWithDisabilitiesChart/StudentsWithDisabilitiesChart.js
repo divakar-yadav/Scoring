@@ -74,15 +74,16 @@ const StudentsWithDisabilitiesChart = ({ row }) => {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }} className='student_disabilities'>
+        <div style={{ marginLeft: '20px', fontSize: '20px' }} className='student_disabilities_title'>
+        Students with disabilities
+      </div>
       <div style={{ width: '200px', height: '200px' }}>
         <HighchartsReact
           highcharts={Highcharts}
           options={options}
         />
       </div>
-      <div style={{ marginLeft: '20px', fontSize: '20px' }}>
-        Students with disabilities
-      </div>
+
     </div>
   );
 };

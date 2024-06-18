@@ -5,12 +5,17 @@
     font-family: Arial, sans-serif;
 }
   
-  .search-boxes {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-  
+.search-boxes {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border: 1px solid lightgray;
+  padding: 20px;
+  max-width: 90%;
+  margin: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
   .search-box {
     display: flex;
     flex-direction: column;
@@ -26,5 +31,7 @@
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-  }
-  
+    outline: none;
+    min-height: 20px;
+    font-size: 15px;
+}

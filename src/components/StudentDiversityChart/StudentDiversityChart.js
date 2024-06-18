@@ -3,6 +3,8 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsMore from 'highcharts/highcharts-more';
 import SolidGauge from 'highcharts/modules/solid-gauge';
+import './StudentDiversityChart.css'
+
 
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
@@ -51,7 +53,7 @@ const StudentDiversityChart = ({ row }) => {
       type: 'solidgauge'
     },
     title: {
-      text: 'Student Diversity'
+      text: ''
     },
     pane: {
       startAngle: 0,
@@ -94,7 +96,8 @@ const StudentDiversityChart = ({ row }) => {
   };
 
   return (
-    <div>
+    <div className='StudentDiversityChart'>
+      <span className='StudentDiversityChart_title'>Student Diversity</span>
       <HighchartsReact
         highcharts={Highcharts}
         options={options}

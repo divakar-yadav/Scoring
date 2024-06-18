@@ -1,6 +1,7 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import './ElaProficiency.css'
 
 const ElaProficiency = ({ row }) => {
   // Extract the relevant values from the row
@@ -21,7 +22,7 @@ const ElaProficiency = ({ row }) => {
       type: 'column'
     },
     title: {
-      text: 'School vs State Percent Proficient ELA'
+      text: ''
     },
     xAxis: {
       categories: categories,
@@ -68,7 +69,10 @@ const ElaProficiency = ({ row }) => {
   };
 
   return (
-    <div>
+    <div className='ElaProficiency'>
+          <div className='ElaProficiency_title'>
+          School vs State Percent Proficient ELA
+      </div>
       <HighchartsReact
         highcharts={Highcharts}
         options={options}
