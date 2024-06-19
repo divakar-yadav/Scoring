@@ -736,11 +736,11 @@ const HomePage = () => {
                                                                 <div className='card-content-other-info'>
                                                                     <div className='card-content-other-info-3'>
                                                                         <div className='card-content-other-info-1-key'>DPI Score</div>
-                                                                        <div className='card-content-other-info-1-value'><span>{limitToTwoDecimals(row['Overall Accountability Score'])}</span><span className='card-content-other-info-1-rating'>{row['Overall Accountability Rating']}</span></div>
+                                                                        <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{row['Overall Accountability Rating']}</span><span>{limitToTwoDecimals(row['Overall Accountability Score'])}</span></div>
                                                                     </div>
                                                                     <div className='card-content-other-info-3'>
                                                                         <div className='card-content-other-info-1-key'>New Score</div>
-                                                                        <div className='card-content-other-info-1-value'>{limitToTwoDecimals(row.nonlinear)}<span className='card-content-other-info-1-rating'>{getRatings(limitToTwoDecimals(row.nonlinear))}</span></div>
+                                                                        <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatings(limitToTwoDecimals(row.nonlinear))}</span>{limitToTwoDecimals(row.nonlinear)}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>

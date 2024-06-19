@@ -57,15 +57,8 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames }) => {
         text: new Text({
           text: `${school.properties.name}`,
           offsetY: 25,
-          font: '8px',
+          font: 'bold 12px Arial, sans-serif', // Increased font weight and size
           fill: new Fill({
-            color: '#fff'
-          }),
-          // stroke: new Stroke({
-          //   color: '#fff',
-          //   width: 2
-          // }),
-          backgroundFill: new Fill({
             color: '#3e4ee1'
           }),
           padding: [3, 40, 3, 40],
