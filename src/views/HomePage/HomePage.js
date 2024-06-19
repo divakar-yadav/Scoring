@@ -278,30 +278,11 @@ const HomePage = () => {
       
     const [loading, setLoading] = useState(false);
 
-    const rowsPerPage = 10;
-    const totalPages = Math.ceil(fileData.length / rowsPerPage);
 
     useEffect(()=>{
 
     },[filters])
-    const handleClick = (event, page) => {
-        event.preventDefault();
-        setCurrentPage(page);
-    };
 
-    const handleNext = (event) => {
-        event.preventDefault();
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const handlePrevious = (event) => {
-        event.preventDefault();
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
 
     const handleFilterChange = (name, value) => {
         const newFilters = { ...filters };
@@ -545,6 +526,26 @@ const HomePage = () => {
         return { paginatedData: sortedData.slice(startIndex, endIndex), calculatedData: sortedData, calculatedData2: calculatedData };
     };
 
+    const rowsPerPage = 10;
+    const totalPages = Math.ceil(renderCardData().calculatedData.length / rowsPerPage);
+    const handleClick = (event, page) => {
+        event.preventDefault();
+        setCurrentPage(page);
+    };
+
+    const handleNext = (event) => {
+        event.preventDefault();
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevious = (event) => {
+        event.preventDefault();
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
     const renderPagination = () => {
         const pageNumbers = [];
         const maxPagesToShow = 5;
