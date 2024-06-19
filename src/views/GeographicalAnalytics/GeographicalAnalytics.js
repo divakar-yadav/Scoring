@@ -28,12 +28,12 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames }) => {
         properties: {
           name: school['School Name'],
           nonlinear: school['nonlinear'],
-          lon,
-          lat
+          lon : school['Long'],
+          lat : school['Lat']
         },
         geometry: {
           type: 'Point',
-          coordinates: [lon, lat]
+          coordinates: [school['Lat'], school['Long']]
         }
       };
     });
@@ -106,7 +106,7 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames }) => {
       ],
       view: new View({
         center: fromLonLat([-88.0103937245483, 42.9768124833109]), // Centered on Madison, WI
-        zoom: 9
+        zoom: 12
       })
     });
 

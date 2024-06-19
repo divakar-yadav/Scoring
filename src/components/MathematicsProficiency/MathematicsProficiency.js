@@ -1,6 +1,7 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import './MathematicsProficiency.css'
 
 const MathematicsProficiency = ({ row }) => {
   // Extract the relevant values from the row

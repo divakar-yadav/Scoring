@@ -5,9 +5,10 @@ import './EligibilityCalculator.css';
 
 const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
     const [chartOptions1, setChartOptions1] = useState({});
+    const [chartOptions2, setChartOptions2] = useState({});
+
     useEffect(() => {
         if (fileData && schoolNames) {
-            console.log(fileData,"------fileData-------")
             processData(fileData, schoolNames);
         }
     }, [fileData, schoolNames]);
@@ -36,12 +37,9 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
         const filteredData = data.filter(row => {
             return features.every(feature => row[feature] !== null && row[feature] !== undefined && row[feature] !== 'NA');
         });
-        console.log(filteredData,"------filteredData-------")
 
         const pipelineData = filteredData.filter(row => row['City'] === 'Milwaukee' || schoolNames.includes(row['School Name']));
-        console.log(pipelineData,"------pipelineData-------")
         const uniqueData = pipelineData.filter((row, index, self) => index === self.findIndex(t => t['School Name'] === row['School Name']));
-        console.log(uniqueData,"------uniqueData-------")
         const finalData = uniqueData.filter(row => row['Percent Economically Disadvantaged'] >= 0.5 || row['School Name'] === 'Golda Meir School');
 
         const rename = {
@@ -75,26 +73,6 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             return { ...row, nonlinear };
         });
 
-        // const plotData = nonlinearData.filter(row => schoolNames.includes(row['School Name'])).map(row => ({
-        //     x: row['Percent Economically Disadvantaged'] * 100,
-        //     y: row['Overall Accountability Score'],
-        //     color: colors[row['Overall Accountability Rating']],
-        //     name: row['School Name'],
-        //     additionalInfo: `
-        //         <b>School Name:</b> ${row['School Name']}<br>
-        //         <b>School Type:</b> ${row['School Type']}<br>
-        //         <b>Enrollment:</b> ${row['School Enrollment']}<br>
-        //         <b>American Indian or Alaskan Native:</b> ${(row['Percent American Indian or Alaskan Native'] * 100).toFixed(2)}%<br>
-        //         <b>Asian:</b> ${(row['Percent Asian'] * 100).toFixed(2)}%<br>
-        //         <b>Black or African American:</b> ${(row['Percent Black or African American'] * 100).toFixed(2)}%<br>
-        //         <b>Hispanic/Latino:</b> ${(row['Percent Hispanic/Latino'] * 100).toFixed(2)}%<br>
-        //         <b>Native Hawaiian or Other Pacific Islander:</b> ${(row['Percent Native Hawaiian or Other Pacific Islander'] * 100).toFixed(2)}%<br>
-        //         <b>White:</b> ${(row['Percent White'] * 100).toFixed(2)}%<br>
-        //         <b>Two or More Races:</b> ${(row['Percent Two or More Races'] * 100).toFixed(2)}%<br>
-        //         <b>City:</b> ${row['City']}
-        //     `
-        // }));
-        console.log(nonlinearData,"-----nonlinearData-----")
         const plotData1 = calculatedData.filter(row => schoolNames.includes(row['School Name'])).map(row => ({
 
             x: row['Percent Economically Disadvantaged'] * 100,
@@ -105,8 +83,8 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             additionalInfo: `
                 <b>School Name:</b> ${row['School Name']}<br>
                 <b>School Name:</b> ${row['School Type']}<br>
-                <b>DPI Score:</b> ${row['Overall Accountability Score']}<br>
-                <b>Nonlinear Score :</b> ${row['nonlinear']}<br>
+                <b>DPI Score:</b> ${row['Overall Accountability Score'].toFixed(2)}<br>
+                <b>Nonlinear Score :</b> ${row['nonlinear'].toFixed(2)}<br>
                 <b>Enrollment:</b> ${row['School Enrollment']}<br>
                 <b>American Indian or Alaskan Native:</b> ${(row['Percent American Indian or Alaskan Native'] * 100).toFixed(2)}%<br>
                 <b>Asian:</b> ${(row['Percent Asian'] * 100).toFixed(2)}%<br>
@@ -119,15 +97,17 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             `
         }));
 
-        const plotData2 = nonlinearData.filter(row => schoolNames.includes(row['School Name'])).map(row => ({
+        const plotData2 = calculatedData.filter(row => schoolNames.includes(row['School Name'])).map(row => ({
             x: row['Percent Economically Disadvantaged'] * 100,
-            y: row['average'],
+            y: row['nonlinear'],
             color: colors[row['Overall Accountability Rating']],
             name: row['School Name'],
             label: row['School Name'].charAt(0),
             additionalInfo: `
                 <b>School Name:</b> ${row['School Name']}<br>
                 <b>School Type:</b> ${row['School Type']}<br>
+                <b>DPI Score:</b> ${row['Overall Accountability Score']}<br>
+                <b>Nonlinear Score :</b> ${row['nonlinear'].toFixed(2)}<br>
                 <b>Enrollment:</b> ${row['School Enrollment']}<br>
                 <b>American Indian or Alaskan Native:</b> ${(row['Percent American Indian or Alaskan Native'] * 100).toFixed(2)}%<br>
                 <b>Asian:</b> ${(row['Percent Asian'] * 100).toFixed(2)}%<br>
@@ -146,7 +126,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
                 zoomType: 'xy'
             },
             title: {
-                text: 'Accountability Score vs ECD Percentage with Rating Color Mapping'
+                text: 'DPI Score vs ECD Percentage with Rating Color Mapping'
             },
             xAxis: {
                 title: {
@@ -160,7 +140,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             },
             yAxis: {
                 title: {
-                    text: 'Accountability Score'
+                    text: 'DPI Score'
                 }
             },
             legend: {
@@ -213,7 +193,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
                 zoomType: 'xy'
             },
             title: {
-                text: 'Average Score vs ECD Percentage with Rating Color Mapping'
+                text: 'New Score vs ECD Percentage with Rating Color Mapping'
             },
             xAxis: {
                 title: {
@@ -227,7 +207,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             },
             yAxis: {
                 title: {
-                    text: 'Average Score'
+                    text: 'New Score'
                 }
             },
             legend: {
@@ -261,7 +241,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
                     tooltip: {
                         useHTML: true,
                         headerFormat: '<b>{point.label}</b><br>',
-                        pointFormat: '{point.x}%, {point.y}<br>{point.additionalInfo}'
+                        pointFormat: '{point.additionalInfo}'
                     }
                 }
             },
@@ -275,7 +255,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             }
         };
         setChartOptions1(options1);
-        // setChartOptions2(options2);
+        setChartOptions2(options2);
     };
 
     return (
@@ -286,17 +266,16 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
                         highcharts={Highcharts}
                         options={chartOptions1}
                     />
-                    {/* <HighchartsReact
+                    <HighchartsReact
                         highcharts={Highcharts}
                         options={chartOptions2}
-                    /> */}
+                    />
                     <div className="color-map">
                         <div><span style={{ backgroundColor: 'green' }}></span>Significantly Exceeds Expectations</div>
                         <div><span style={{ backgroundColor: 'blue' }}></span>Exceeds Expectations</div>
                         <div><span style={{ backgroundColor: 'black' }}></span>Meets Expectations</div>
                         <div><span style={{ backgroundColor: 'pink' }}></span>Meets Few Expectations</div>
                         <div><span style={{ backgroundColor: 'red' }}></span>Fails to Meet Expectations</div>
-                        <div><span style={{ backgroundColor: 'gray' }}></span>NR-DATA</div>
                     </div>
                 </>
             )}
