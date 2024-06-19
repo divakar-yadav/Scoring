@@ -727,7 +727,13 @@ const HomePage = () => {
                                                         <Link to="/school" state={JSON.stringify(row)}>
                                                         <div key={rowIndex} className="card">
                                                             <div className="card-content">
-                                                                <SmallMap lat={!isColumnBlank(row, 'Lat') ? row['Lat'] : 42.9768124833109} lng={!isColumnBlank(row, 'Long') ? row['Long'] : -88.0103937245483} />
+                                                                <SmallMap 
+                                                                    height = {'200px'}
+                                                                    width = {'200px'}
+                                                                    minWidth = {'200px'}
+                                                                    maxWidth = {'200px'}
+                                                                    zoomControl= {false}
+                                                                lat={!isColumnBlank(row, 'Lat') ? row['Lat'] : 42.9768124833109} lng={!isColumnBlank(row, 'Long') ? row['Long'] : -88.0103937245483} />
                                                                 <div className='card-content-main-info'>
                                                                 <a>{row['School Name']}</a>
                                                                     <div className='card-content-main-info-meta'>

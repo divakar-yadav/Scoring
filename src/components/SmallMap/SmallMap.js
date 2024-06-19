@@ -15,11 +15,11 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const SmallMap = ({ lat, lng }) => {
+const SmallMap = ({ lat, lng , height, width, minWidth, maxWidth, zoomControl }) => {
     const position = [lat, lng];
 
     return (
-        <MapContainer center={position} zoom={15} style={{ height: '200px', width: '200px', minWidth: '200px', maxWidth: '200px'}}  zoomControl={false}             attributionControl={false} // Disable attribution control
+        <MapContainer center={position} zoom={15} style={{ height: height, width: width, minWidth: minWidth, maxWidth: maxWidth}}  zoomControl={zoomControl}             attributionControl={false} // Disable attribution control
         // Disable zoom control
 >
             <TileLayer
