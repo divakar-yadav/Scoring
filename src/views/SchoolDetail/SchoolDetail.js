@@ -30,7 +30,7 @@ const SchoolDetail = ( )=> {
           <EnglishLearners row = {row}/>
           <OpenEnrolment row = {row}/>
 
-          <SubjectProficiencyChart row = {row}/>
+          {/* <SubjectProficiencyChart row = {row}/> */}
           <TeacherStatistics row={row}/>
     </div>
   );

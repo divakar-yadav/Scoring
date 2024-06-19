@@ -1,8 +1,9 @@
 .teacher-statistics {
-    width: 400px;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-  }
+  width: 400px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  margin-top: 70px;
+}
   
   .stat-row {
     display: flex;

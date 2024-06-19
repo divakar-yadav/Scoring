@@ -48,6 +48,9 @@ const GeneralAnalytics = ({ data }) => {
                 return getTooltipInfo(row);
             }
         },
+        credits: {
+            enabled: false // Disable Highcharts credits
+        },
         series: [{
             name: 'Schools',
             color: 'rgba(223, 83, 83, .5)',
@@ -77,6 +80,9 @@ const GeneralAnalytics = ({ data }) => {
             title: {
                 text: 'School Growth Score'
             }
+        },
+        credits: {
+            enabled: false // Disable Highcharts credits
         },
         series: [{
             name: 'Schools',
@@ -108,6 +114,9 @@ const GeneralAnalytics = ({ data }) => {
                 text: 'Percent Proficient Mathematics (2023)'
             }
         },
+        credits: {
+            enabled: false // Disable Highcharts credits
+        },
         series: [{
             name: 'Schools',
             color: 'rgba(34, 34, 34, .5)',
@@ -127,6 +136,9 @@ const GeneralAnalytics = ({ data }) => {
         title: {
             text: 'School Type Distribution'
         },
+        credits: {
+            enabled: false // Disable Highcharts credits
+        },
         series: [{
             name: 'Count',
             colorByPoint: true,
@@ -145,6 +157,9 @@ const GeneralAnalytics = ({ data }) => {
         },
         title: {
             text: 'Locale Description Distribution'
+        },
+        credits: {
+            enabled: false // Disable Highcharts credits
         },
         series: [{
             name: 'Count',
