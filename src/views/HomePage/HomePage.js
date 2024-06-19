@@ -775,7 +775,7 @@ const HomePage = () => {
                             <Route path="/calculate-elgibility" element={fileData.length > 0 && <EligibilityCalculator fileData={fileData} schoolNames={pipeline} calculatedData = {renderCardData().calculatedData2}/>} />
                             <Route path="/general-analytics" element={fileData.length > 0 && <GeneralAnalytics data={renderCardData().calculatedData2} />} />
                             <Route path="/geographical-analytics" element={fileData.length > 0 && <GeographicalAnalytics data={fileData} schoolNames={pipeline} calculatedData={renderCardData().calculatedData} />} />
-                            <Route path="/compare-schools" element={fileData.length > 0 && <SchoolComparisonContainer schools={fileData} />} />
+                            <Route path="/compare-schools" element={fileData.length > 0 && <SchoolComparisonContainer schools={renderCardData().calculatedData2} />} />
                         </Routes>
                     </div>
                 </Router>
