@@ -298,10 +298,12 @@ const HomePage = () => {
             }
         }
 
-        if (value === 'Pipeline Schools' && !newFilters.pipeline) {
-            newFilters.pipeline = true
-        }else{
-            newFilters.pipeline = false
+        if (value === 'Pipeline Schools') {
+            if(!newFilters.pipeline){
+                newFilters.pipeline = true
+            }else{
+                newFilters.pipeline = false
+            }
         }
         // return newFilters;
         setFilters(newFilters);
