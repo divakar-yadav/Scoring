@@ -211,7 +211,7 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames }) => {
                 key={item}
                 onClick={() => setCurrentYear(item)}
                 className='eligibility-calculator-year-filter-year'
-                style={currentYear === item ? { backgroundColor: '#3e4ee1', color: '#fff' } : null}
+                style={currentYear === item ? { backgroundColor: '#3e4ee1', color: '#fff',fontWeight:600 } : null}
               >
                 {item}
               </div>

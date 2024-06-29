@@ -321,7 +321,7 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData 
                 <span>No of schools {filteredSchools.length}</span>
                 <div className='eligibility-calculator-year-filter'>
                     {uniqueYears.map((item) => (
-                        <div key={item} onClick={() => setCurrentYear(item)} className='eligibility-calculator-year-filter-year' style={currentYear === item ? { backgroundColor: '#3e4ee1', color: '#fff' } : null}>{item}</div>
+                        <div key={item} onClick={() => setCurrentYear(item)} className='eligibility-calculator-year-filter-year' style={currentYear === item ? { backgroundColor: '#3e4ee1', color: '#fff', fontWeight:600 } : null}>{item}</div>
                     ))}
                 </div>
             </div>

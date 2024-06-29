@@ -291,7 +291,7 @@ const HomePage = () => {
             }, 1000);
         }
 
-    },[filters])
+    },[])
 
 
     const handleFilterChange = (name, value) => {

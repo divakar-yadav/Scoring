@@ -292,7 +292,7 @@ const MultiYearHomePage = () => {
                 setFileData(updatedCards);
             }, 1000);
         }
-    }, [state, filters]);
+    }, [ ]);
 
 
     const handleFilterChange = (name, value) => {

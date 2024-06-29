@@ -29,4 +29,7 @@
 .year-filter-wrapper {
   display: flex;
   margin-left: 12px;
+  border: 1px solid lightgray;
+  padding: 5px;
+  width: -webkit-fill-available;
 }
