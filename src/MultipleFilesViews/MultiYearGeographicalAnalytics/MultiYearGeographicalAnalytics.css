@@ -1,0 +1,32 @@
+.map {
+  width: 100%;
+  height: 1000px;
+  margin: auto;
+}
+/* .map {
+  width: 100%;
+  height: 500px;
+} */
+
+.tooltip {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  white-space: nowrap;
+  display: none;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+.filter-item label {
+  color: #3e4ee1;
+  font-weight: 500;
+}
+.year-filter-wrapper {
+  display: flex;
+  margin-left: 12px;
+}

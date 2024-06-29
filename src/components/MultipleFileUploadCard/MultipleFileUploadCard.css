@@ -1,0 +1,114 @@
+.UploadMultipleYears {
+    padding: 20px;
+}
+
+.UploadMultipleYears_card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+    border: 1px solid lightgray;
+    border-bottom: 3px solid #3e4ee1;
+    padding: 22px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgb(0 0 0 / 16%);
+    margin-top: 20px;
+}
+
+.custom-upload-button {
+    display: flex;
+    padding: 10px 20px;
+    border: 1px dashed #b6bed1;
+    background-color: #f0f2f7;
+    font-weight: 200;
+    color: #475f7b;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    width: max-content;
+    margin: auto;
+    font-size: 12px;
+}
+
+.custom-upload-button:hover {
+    background-color: #e1e3e9;
+    color: #3d546f;
+}
+
+.file-info {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    font-size: 10px;
+}
+
+.file-info span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.delete-button {
+    color: rgb(61, 60, 60);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: underline;
+    width: 100%;
+}
+.delete-button:hover {
+    /* background-color: #ff0000; */
+    color: rgb(104, 102, 102);
+
+}
+
+
+span.file-info_file_name {
+    font-size: 13px;
+    font-weight: 600;
+    width: 100%;
+}
+.timestamp_fileSize {
+    display: flex;
+    width: 100%;
+    margin-top: 8px;
+}
+span.timestamp_fileSize_size {
+    margin-right: 10px;
+}
+.UploadMultipleYears_card_upload_data {
+    min-width: 27%;
+    padding: 20px;
+    /* border-radius: 5px; */
+    margin-left: 10px;
+}
+.UploadMultipleYears_card_upload_maping{
+    min-width: 27%;
+    padding: 20px;
+    border-right: 3px solid #3e4ee1;
+    border-left: 3px solid #3e4ee1;
+    /* border-radius: 5px; */
+    margin-left: 10px;
+}
+.UploadMultipleYears_card_upload_pipeline_schools {
+    min-width: 27%;
+    padding: 20px;
+    /* border: 1px solid lightgray; */
+    /* border-radius: 5px; */
+    margin-left: 10px;
+}
+img.UploadMultipleYears_card_delete_button_icon {
+    max-height: 30px;
+}
+.UploadMultipleYears_card_delete_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

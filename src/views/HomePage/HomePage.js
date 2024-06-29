@@ -2,23 +2,23 @@ import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import Upload from '../../components/Upload/Upload';
 import Loader from '../../components/Loader/Loader';
-import schoolBanner from '../../assets/1474.png';
 import cross from '../../assets/cross.png';
 import home from '../../assets/home.png';
 import schools from '../../assets/school.png';
 import calculator from '../../assets/calculator.png';
+import setting from '../../assets/setting.png';
 import geo from '../../assets/geographic.png';
 import analysis from '../../assets/monitor.png';
 import SmallMap from '../../components/SmallMap/SmallMap';
-import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Calculator from '../../components/Calculator/Calculator';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import EligibilityCalculator from '../EligibilityCalculator/EligibilityCalculator';
 import GeneralAnalytics from '../GeneralAnalytics/GeneralAnalytics';
 import GeographicalAnalytics from '../GeographicalAnalytics/GeographicalAnalytics';
 import SchoolComparisonContainer from '../../views/SchoolComparisonContainer/SchoolComparisonContainer';
 import SchoolDetail from '../../views/SchoolDetail/SchoolDetail';
 import CheckboxList from '../../components/CheckboxList/CheckboxList';
+import ConfigManagement from '../ConfigManagement/ConfigManagement';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
     const [fileData, setFileData] = useState([]);
@@ -35,15 +35,8 @@ const HomePage = () => {
     });
     const [filterChips, setFilterChips] = useState([]);
     const [currentTab, setCurrentTab] = useState('Home');
-
-    const colors = {
-        'Significantly Exceeds Expectations': 'green',
-        'Exceeds Expectations': 'blue',
-        'Meets Expectations': 'black',
-        'Meets Few Expectations': 'pink',
-        'Fails to Meet Expectations': 'red',
-        'NR-DATA': 'gray'
-    };
+    const navigate = useNavigate();
+    // const location = useLocation();
     const schoolTypes = [
         'Elementary School',
         'High School',
@@ -279,7 +272,24 @@ const HomePage = () => {
     const [loading, setLoading] = useState(false);
 
 
+    const {state} = useLocation();
+
     useEffect(()=>{
+        console.log(state)
+        if(state!==null){
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                const updatedData = state.cards[0].schoolData.map(row => {
+                    const school = schoolsLatLong.find(school => school[0] === row['School Name']);
+                    if (school) {
+                        return { ...row, Lat: school[1], Long: school[2] };
+                    }
+                    return { ...row, Lat: null, Long: null };
+                });
+                setFileData(updatedData);
+            }, 1000);
+        }
 
     },[filters])
 
@@ -333,6 +343,7 @@ const HomePage = () => {
     const handleSorting = (e) => {
         setSorting({sortBy:e.target.value})
     }
+
     const getRatings = (score) => {
         let category = '';
 
@@ -616,69 +627,93 @@ const HomePage = () => {
         setFilterChips(filterChips.filter(chip => chip !== chipToRemove));
     };
 
+    const location = useLocation();
+    const currentPath = location.pathname;
+    const updateLastPathSegment = (currentPath, newSegment) => {
+        const pathArray = currentPath.split('/');
+        if (pathArray.length > 1) {
+            pathArray[pathArray.length - 1] = newSegment;
+            return pathArray.join('/');
+        }
+        return currentPath;
+    };
+
+    const handleNavigateHome = () => {
+        navigate(`/`);
+    };
     return (
         <div className='homepage'>
-            <Upload setFileData={handleFileUpload} maxFiles={1} />
             {loading ? (
                 <Loader />
             ) : (
-                <Router>
                     <div className='school-cards'>
+                                                <div className='navigate_to_upload_initials' onClick={()=>{handleNavigateHome()}}>
+                            <span > &#x2190; Go back to Upload section</span>
+                            </div>
                         <div className='schools-utilities'>
                             {fileData.length > 0 && (
                                 <div className='schools-utilities-wrapper'>
-                                    <Link to='/'>
+                                    <Link to={updateLastPathSegment(currentPath,'home')}>
                                     <div className='schools-utilities-compare-wrapper' onClick={()=>setCurrentTab('Home')}>
                                         <div className='schools-utilities-compare'>
                                             <img className='schools-utilities-compare-icon' src={home} />
-                                            <span className='schools-utilities-compare-text'>Home</span>
+                                            <span className='schools-utilities-compare-text' style={{color: currentTab==='Home' ? '#3e4ee1' : null, fontWeight: currentTab==='Home' ? 600 : 200}}>Home</span>
                                         </div>
                                         {currentTab === 'Home' ? <div className='active_tab'></div> : null}
                                         </div>
                                     </Link>
 
-                                    <Link to='/calculate-elgibility'>
+                                    <Link to={updateLastPathSegment(currentPath,'calculate-elgibility')}>
                                     <div>
                                     <div className='schools-utilities-calculate' onClick={()=>setCurrentTab('Eligibility')}>
                                             <img className='schools-utilities-calculate-icon' src={calculator} />
-                                            <span className='schools-utilities-calculate-text'>Visualization</span>
+                                            <span className='schools-utilities-calculate-text' style={{color: currentTab==='Eligibility' ? '#3e4ee1' : null, fontWeight: currentTab==='Eligibility' ? 600 : 200}}>Visualization</span>
                                         </div>
                                         {currentTab === 'Eligibility' ? <div className='active_tab'></div> : null}
                                     </div>
                                     </Link>
-                                    <Link to='/compare-schools'>
+                                    <Link to={updateLastPathSegment(currentPath,'compare-schools')}>
                                     <div>
                                     <div className='schools-utilities-compare' onClick={()=>setCurrentTab('Compare Schools')}>
                                             <img className='schools-utilities-compare-icon' src={schools} />
-                                            <span className='schools-utilities-compare-text'>Compare Schools</span>
+                                            <span className='schools-utilities-compare-text' style={{color: currentTab==='Compare Schools' ? '#3e4ee1' : null, fontWeight: currentTab==='Compare Schools' ? 600 : 200}}>Compare Schools</span>
                                         </div>
                                         {currentTab === 'Compare Schools' ? <div className='active_tab'></div> : null}
                                     </div>
                                     </Link>
 
-                                    <Link to='/geographical-analytics'>
+                                    <Link to={updateLastPathSegment(currentPath,'geographical-analytics')}>
                                     <div>
                                     <div className='schools-utilities-geo' onClick={()=>setCurrentTab('Geographical analytics')}>
                                             <img className='schools-utilities-geo-icon' src={geo} />
-                                            <span className='schools-utilities-geo-text'>Map</span>
+                                            <span className='schools-utilities-geo-text' style={{color: currentTab==='Geographical analytics' ? '#3e4ee1' : null, fontWeight: currentTab==='Geographical analytics' ? 600 : 200}}>Map</span>
                                         </div>
                                         {currentTab === 'Geographical analytics' ? <div className='active_tab'></div> : null}
                                     </div>
                                     </Link>
-                                    <Link to='/general-analytics'>
+                                    <Link to={updateLastPathSegment(currentPath,'general-analytics')}>
                                     <div>
                                     <div className='schools-utilities-analytics' onClick={()=>setCurrentTab('General Analysis')}>
                                             <img className='schools-utilities-analytics-icon' src={analysis} />
-                                            <span className='schools-utilities-analytics-text'>General Analysis</span>
+                                            <span className='schools-utilities-analytics-text' style={{color: currentTab==='General Analysis' ? '#3e4ee1' : null, fontWeight: currentTab==='General Analysis' ? 600 : 200}}>General Analysis</span>
                                         </div>
                                         {currentTab === 'General Analysis' ? <div className='active_tab'></div> : null}
                                     </div>
                                     </Link>
+                                    {/* <Link to={updateLastPathSegment(currentPath,'settings')}>
+                                    <div>
+                                    <div className='schools-utilities-analytics' onClick={()=>setCurrentTab('Settings')}>
+                                            <img className='schools-utilities-analytics-icon' src={setting} />
+                                            <span className='schools-utilities-analytics-text' style={{color: currentTab==='Settings' ? '#3e4ee1' : null, fontWeight: currentTab==='Settings' ? 600 : 200}}>Settings</span>
+                                        </div>
+                                        {currentTab === 'Settings' ? <div className='active_tab'></div> : null}
+                                    </div>
+                                    </Link> */}
                                 </div>
                             )}
                         </div>
                         <Routes>
-                            <Route path="/" element={
+                            <Route path="/home" element={
                                 <React.Fragment>
                                     {fileData.length > 0 && (
                                         <>
@@ -700,8 +735,8 @@ const HomePage = () => {
                                                         <select name="locationType" onChange={(e)=>handleSorting(e)}>
                                                             <option value="Alphabetically (A-Z)">{`Alphabetically (A-Z)`}</option>
                                                             <option value="Alphabetically (Z-A)">{`Alphabetically (Z-A)`}</option>
-                                                            <option value="Non Linear Score (low to high)">{`Non Linear Score (low to high)`}</option>
-                                                            <option value="Non Linear Score (high to low)">{`Non Linear Score (high to low)`}</option>
+                                                            <option value="Non Linear Score (low to high)">{`Weighted Score (low to high)`}</option>
+                                                            <option value="Non Linear Score (high to low)">{`Weighted Score (high to low)`}</option>
                                                             <option value="DPI (low to high)">{`DPI (low to high)`}</option>
                                                             <option value="DPI (high to low)">{`DPI (high to low)`}</option>
                                                             <option value="Enrollment (low to high)">{`Enrollment (low to high)`}</option>
@@ -724,7 +759,6 @@ const HomePage = () => {
                                                         <div className="chip-filter" onClick={() => handleChipClick('Search by District')}>Search by District</div>
                                                     </div> */}
                                                     {renderCardData().paginatedData.map((row, rowIndex) => (
-                                                        <Link to="/school" state={JSON.stringify(row)}>
                                                         <div key={rowIndex} className="card">
                                                             <div className="card-content">
                                                                 <SmallMap 
@@ -735,7 +769,9 @@ const HomePage = () => {
                                                                     zoomControl= {false}
                                                                 lat={!isColumnBlank(row, 'Lat') ? row['Lat'] : 42.9768124833109} lng={!isColumnBlank(row, 'Long') ? row['Long'] : -88.0103937245483} />
                                                                 <div className='card-content-main-info'>
-                                                                <a>{row['School Name']}</a>
+                                                                <Link to={()=>updateLastPathSegment(currentPath,'school')} state={JSON.stringify(row)}>
+                                                                    {row['School Name']}
+                                                                </Link>
                                                                     <div className='card-content-main-info-meta'>
                                                                         <div className='card-content-main-info-address'>{row['Location']}</div>
                                                                         <div className='card-content-main-info-school-type'>{row['School Type']}</div>
@@ -748,7 +784,7 @@ const HomePage = () => {
                                                                         <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{row['Overall Accountability Rating']}</span><span>{limitToTwoDecimals(row['Overall Accountability Score'])}</span></div>
                                                                     </div>
                                                                     <div className='card-content-other-info-3'>
-                                                                        <div className='card-content-other-info-1-key'>New Score</div>
+                                                                        <div className='card-content-other-info-1-key'>Weighted Score</div>
                                                                         <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatings(limitToTwoDecimals(row.nonlinear))}</span>{limitToTwoDecimals(row.nonlinear)}</div>
                                                                     </div>
                                                                 </div>
@@ -757,7 +793,6 @@ const HomePage = () => {
                                                                 <div className='ratings'></div>
                                                             </div>
                                                         </div>
-                                                        </Link>
                                                     ))}
                                                     <div>
                                                     {renderCardData().calculatedData.length === 0 ? <div className='no_data_found'>No data found</div> : null}
@@ -774,11 +809,11 @@ const HomePage = () => {
                             <Route path="/school" element={<SchoolDetail />} />
                             <Route path="/calculate-elgibility" element={fileData.length > 0 && <EligibilityCalculator fileData={fileData} schoolNames={pipeline} calculatedData = {renderCardData().calculatedData2}/>} />
                             <Route path="/general-analytics" element={fileData.length > 0 && <GeneralAnalytics data={renderCardData().calculatedData2} />} />
-                            <Route path="/geographical-analytics" element={fileData.length > 0 && <GeographicalAnalytics data={fileData} schoolNames={pipeline} calculatedData={renderCardData().calculatedData} />} />
+                            <Route path="/geographical-analytics" element={fileData.length > 0 && <GeographicalAnalytics data={fileData} schoolNames={pipeline} calculatedData={renderCardData().calculatedData2} />} />
                             <Route path="/compare-schools" element={fileData.length > 0 && <SchoolComparisonContainer schools={renderCardData().calculatedData2} />} />
+                            <Route path="/settings" element={fileData.length > 0 && <ConfigManagement schools={renderCardData().calculatedData2} />} />
                         </Routes>
                     </div>
-                </Router>
             )}
         </div>
     );

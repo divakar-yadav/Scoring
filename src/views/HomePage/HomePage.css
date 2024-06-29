@@ -16,10 +16,10 @@
 }
 .cards-container {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
-    min-width: 72%;
-    padding: 20px;
+    flex-direction: column !important;
+    gap: 16px !important;
+    min-width: 72% !important;
+    padding: 20px !important;
 }
 
 .card {
@@ -97,8 +97,11 @@
 }
 .card-content-main-info {
     padding: 15px;
-    max-width: 54%;
-    min-width: 54%;
+    max-width: 54% !important;
+    min-width: 54% !important;
+}
+.card-content-main-info a:hover{
+    text-decoration: underline;
 }
 .card-content-main-info-description {
     font-size: 12px;

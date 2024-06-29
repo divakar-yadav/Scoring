@@ -1,0 +1,118 @@
+.eligibility-calculator {
+    text-align: center;
+    width: 100%;
+    align-self: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.color-map {
+    margin-top: 20px;
+}
+
+.color-map div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.color-map span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+.checkbox-filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: start;
+    border-right: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 20px;
+    min-width: 20%;
+}
+.eligibility-calculator-maps {
+    min-width: 100%;
+}
+.checkbox-filters span {
+    font-size: 12px;
+    color: #3e4ee1;
+    font-weight: 600;
+}
+.filters-chart-wrapper {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    align-self: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.eligibility-calculator-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    min-width: 100%;
+    max-width: 100%;
+    align-self: center;
+    padding: 16px 0;
+    flex-wrap: wrap;
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+    justify-content: start;
+}
+.filters-chart-wrapper {
+    text-align: center;
+    padding: 20px;
+    width: 80%;
+    align-self: center;
+    display: flex;
+    padding-top: 0px;
+    justify-content: space-around;
+}
+.eligibility-calculator-maps {
+    min-width: 72%;
+    padding-top: 20px;
+}
+.checkbox-filters label {
+    margin-bottom: 0.5em;
+    display: flex;
+}
+
+.checkbox-filters-title-text {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #000;
+}
+.checkbox-filters-school-types {
+    margin-top: 10px;
+}
+.eligibility-calculator-navbar span {
+    padding-left: 206px;
+    padding-top: 8px;
+    font-weight: 600;
+}
+.eligibility-calculator-year-filter {
+    border: 1px solid lightgray;
+    padding: 5px;
+    margin-left: 158px;
+    /* justify-content: start; */
+    display: flex;
+    /* justify-items: baseline; */
+}
+.eligibility-calculator-year-filter-year {
+    padding: 4px;
+    border-radius: 2px;
+    margin-left: 4px;
+    cursor: pointer;
+    margin-right: 4px;
+}

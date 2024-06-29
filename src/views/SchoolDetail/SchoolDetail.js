@@ -49,7 +49,7 @@ const getRatings = (score) => {
 
   return (
     <div className="SchoolDetail">
-      <Link to='/'>&#x2190;Back</Link>
+      <Link to='/single-year/home'>&#x2190;Back</Link>
       <div className='school_detail_wrapper'>
         <div>
             <div className='school_name'>{row['School Name']}</div>

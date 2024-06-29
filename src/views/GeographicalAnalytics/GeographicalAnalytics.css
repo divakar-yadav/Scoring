@@ -16,3 +16,16 @@
   white-space: nowrap;
   display: none;
 }
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+.filter-item label {
+  color: #3e4ee1;
+  font-weight: 500;
+}
+.filter-item {
+  margin-left: 15px;
+}

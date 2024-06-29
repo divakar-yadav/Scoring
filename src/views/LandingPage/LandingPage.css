@@ -1,0 +1,79 @@
+.landingpage_single_year {
+    padding: 20px;
+    margin-right: 20px;
+    text-align: center;
+    text-decoration: none;
+}
+.landingpage_multiple_year {
+    padding: 20px;
+    margin-left: 20px;
+    text-align: center;
+    text-decoration: none;
+}
+.landingPage {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 140px;
+}
+.landing_page_content {
+    display: flex;
+    justify-content: center;
+}
+span.landingpage_single_year_text {
+    color: #3e4ee1;
+    font-size: 1.475rem;
+    font-weight: 500;
+    line-height: 1.33;
+}
+span.landingpage_multiple_year_text {
+    color: #3e4ee1;
+    font-size: 1.475rem;
+    font-weight: 500;
+    line-height: 1.33;
+}
+.landingpage_single_year_wrapper {
+    border: 1px solid #939393;
+    border-radius: 5px;
+    margin-right: 20px;
+    min-width: 265px;
+    cursor: pointer;
+    padding: 10px;
+}
+.landingpage_multiple_year_wrapper {
+    border: 1px solid #939393;
+    border-radius: 5px;
+    margin-left: 20px;
+    min-width: 265px;
+    cursor: pointer;
+    padding: 10px;
+}
+img.landingpage_single_year_icon {
+    margin: auto;
+    display: flex;
+}
+img.landingpage_multiple_year_icon {
+    display: flex;
+    margin: auto;
+}
+span.landingpage_single_year_arrow {
+    color: #3e4ee1;
+    font-size: 24px;
+    margin-left: 10px;
+}
+.header_text {
+    color: #3e4ee1;
+    font-size: 1.45rem;
+    font-weight: 300;
+    text-align: center;
+    line-height: 1.2em;
+    margin-bottom: 70px;
+}
+.header_text_product_name {
+    color: #3e4ee1;
+    font-size: 2.45rem;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.2em;
+    margin-bottom: 70px;
+}

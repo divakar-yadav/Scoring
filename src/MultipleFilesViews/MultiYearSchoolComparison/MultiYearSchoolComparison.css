@@ -1,0 +1,51 @@
+.school-comparison {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .school-comparison table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .school-comparison th, .school-comparison td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .school-comparison th {
+    background-color: #f2f2f2;
+    font-weight: 100;
+}
+  
+  .school-comparison tr:nth-child(even) {
+    background-color: #fff;
+  }
+  
+  .school-comparison tr:hover {
+    background-color: #ddd;
+  }
+  
+  .school-comparison th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #fff;
+    color: #3e4ee1;
+}
+  
+.school-comparison {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.school-comparison h2 {
+  font-size: 18px;
+}

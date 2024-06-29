@@ -1,0 +1,53 @@
+.SchoolDetail {
+    width: 60%;
+    margin: auto;
+}
+.school_name {
+    font-size: 28px;
+    font-weight: 500;
+    margin-top: 50px;
+}
+.school_type {
+    margin-top: 13px;
+    color: #3e4ee1;
+    font-weight: 500;
+}
+.SchoolDetail {
+    width: 60%;
+    margin: auto;
+    border: 1px solid lightgray;
+    padding: 80px;
+    border-radius: 20px;
+
+}
+
+.SchoolDetail a {
+    font-weight: 800;
+}
+.school_detail_wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.SchoolDetail_map_container {
+    border: 1px solid #bfbfbf;
+    border-radius: 4px;
+}
+.school_detail_ratings_dpi_text {
+    font-weight: 600;
+    color: #3e4ee1;
+}
+.school_detail_ratings_new_score_text {
+    font-weight: 600;
+    color: #3e4ee1;
+}
+span.school_detail_ratings_dpi_score {
+    margin-left: 14px;
+    font-weight: 600;
+}
+span.school_detail_ratings_new_score_score {
+    margin-left: 14px;
+    font-weight: 600;
+}
+.school_detail_ratings_new_score {
+    margin-top: 20px;
+}

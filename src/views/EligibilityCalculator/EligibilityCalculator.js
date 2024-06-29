@@ -3,17 +3,83 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import './EligibilityCalculator.css';
 
-const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
+const EligibilityCalculator = ({ fileData, schoolNames, calculatedData }) => {
     const [chartOptions1, setChartOptions1] = useState({});
     const [chartOptions2, setChartOptions2] = useState({});
+    const [selectedSchoolTypes, setSelectedSchoolTypes] = useState([]);
 
     useEffect(() => {
         if (fileData && schoolNames) {
-            processData(fileData, schoolNames);
+            processData(fileData, schoolNames, selectedSchoolTypes);
         }
-    }, [fileData, schoolNames]);
+    }, [fileData, schoolNames, selectedSchoolTypes]);
+    const pipelineSchools = [
+        "Bruce Guadalupe",
+        "Forest Home Elementary",
+        "Milwaukee College Preparatory School -- 36th Street Campus",
+        "Milwaukee College Preparatory School -- 38th Street",
+        "Milwaukee College Preparatory School -- Lloyd Street",
+        "Milwaukee College Preparatory School: Lola Rowe North Campus",
+        "Milwaukee Environmental Science Academy",
+        "Notre Dame School of Milwaukee",
+        "Prince of Peace",
+        "Rocketship Southside Community Prep",
+        "Rocketship Transformation Prep",
+        "Saint Marcus Lutheran School",
+        "Stellar Collegiate Charter School",
+        "United Community Center Acosta Middle School",
+        "Wedgewood Park School",
+        "Carmen High School of Science and Technology South Campus",
+        "Carmen High School of Science and Technology Southeast Campus",
+        "Carmen Middle/High School of Science and Technology Northwest Campus",
+        "Carmen Middle School South",
+        "Cristo Rey Jesuit Milwaukee High School",
+        "Dr Howard Fuller Collegiate Academy",
+        "King International",
+        "Reagan College Preparatory High",
+        "HAPA-Hmong American Peace Academy K3-12",
+        "Milwaukee Academy of Science",
+        "Saint Augustine Preparatory Academy",
+        "Kingdom Prep Lutheran High School",
+        "Pilgrim Lutheran School",
+        "Golda Meir School"
+    ];
+    const handleCheckboxChange = (event) => {
+        const { name, checked } = event.target;
 
-    const processData = (data, schoolNames) => {
+        setSelectedSchoolTypes((prevSelectedSchoolTypes) => {
+            if (checked ) {
+                return [...prevSelectedSchoolTypes, name];
+            } 
+            else {
+                return prevSelectedSchoolTypes.filter((type) => type !== name);
+            }
+        });
+
+    };
+    const limitToTwoDecimals = (num) => {
+        return parseFloat(num.toFixed(2));
+    };
+    const getRatings = (score) => {
+        let category = '';
+
+        if (score < 40) {
+            category = 'Fails to Meet Expectations';
+        } else if (score >= 40 && score < 50) {
+            category = 'Meets Few Expectations';
+        } else if (score >= 50 && score < 60) {
+            category = 'Meets Expectations';
+        } else if (score >= 60 && score < 70) {
+            category = 'Exceeds Expectations';
+        } else if (score >= 70) {
+            category = 'Significantly Exceeds Expectations';
+        }
+
+        return category;
+    }
+    const filteredSchools = calculatedData.filter(row =>  (selectedSchoolTypes.length === 0 || selectedSchoolTypes.includes(row['School Type']) || selectedSchoolTypes.includes('Pipeline Schools') && pipelineSchools.includes(row['School Name']) ))
+
+    const processData = (data, schoolNames, selectedSchoolTypes) => {
         const colors = {
             'Significantly Exceeds Expectations': 'green',
             'Exceeds Expectations': 'blue',
@@ -34,47 +100,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             'Percent Two or More Races', 'City'
         ];
 
-        const filteredData = data.filter(row => {
-            return features.every(feature => row[feature] !== null && row[feature] !== undefined && row[feature] !== 'NA');
-        });
-
-        const pipelineData = filteredData.filter(row => row['City'] === 'Milwaukee' || schoolNames.includes(row['School Name']));
-        const uniqueData = pipelineData.filter((row, index, self) => index === self.findIndex(t => t['School Name'] === row['School Name']));
-        const finalData = uniqueData.filter(row => row['Percent Economically Disadvantaged'] >= 0.5 || row['School Name'] === 'Golda Meir School');
-
-        const rename = {
-            'School ELA Achievement Score': "ELA_achievement",
-            'School Mathematics Achievement Score': "math_achievement",
-            'School ELA Growth Score': "ELA_growth",
-            'School Mathematics Growth Score': "math_growth",
-            'School On-Track to Graduation Score'  : "graduation"
-        };
-
-        const metric = Object.values(rename);
-
-        const standardizedData = finalData.map(row => {
-            const standardizedRow = { ...row };
-            metric.forEach(key => {
-                const mean = finalData.reduce((acc, cur) => acc + cur[key], 0) / finalData.length;
-                const std = Math.sqrt(finalData.reduce((acc, cur) => acc + Math.pow(cur[key] - mean, 2), 0) / finalData.length);
-                standardizedRow[`${key}_score`] = (row[key] - mean) / std;
-            });
-            return standardizedRow;
-        });
-
-        const f = (achievement, growth, ecd, graduation, k1 = 0.6, k2 = 0.3, k3=0.2) => {
-            return 1 / (1 + Math.exp(-(k1 * achievement + k2 * growth * ecd + k3*graduation*ecd)));
-        };
-
-        const nonlinearData = standardizedData.map(row => {
-            const achievement = (row['ELA_achievement_score'] + row['math_achievement_score']) / 2.0;
-            const growth = (row['ELA_growth_score'] + row['math_growth_score']) / 2.0;
-            const nonlinear = f(achievement, growth, row['Percent Economically Disadvantaged'], row['graduation_score']) * 100.0;
-            return { ...row, nonlinear };
-        });
-
-        const plotData1 = calculatedData.filter(row => schoolNames.includes(row['School Name'])).map(row => ({
-
+        const plotData1 = calculatedData.filter(row =>  (selectedSchoolTypes.length === 0 || selectedSchoolTypes.includes(row['School Type']) || selectedSchoolTypes.includes('Pipeline Schools') && pipelineSchools.includes(row['School Name']) )).map(row => ({
             x: row['Percent Economically Disadvantaged'] * 100,
             y: row['Overall Accountability Score'],
             color: colors[row['Overall Accountability Rating']],
@@ -82,7 +108,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             label: row['School Name'].charAt(0),
             additionalInfo: `
                 <b>School Name:</b> ${row['School Name']}<br>
-                <b>School Name:</b> ${row['School Type']}<br>
+                <b>School Type:</b> ${row['School Type']}<br>
                 <b>DPI Score:</b> ${row['Overall Accountability Score'].toFixed(2)}<br>
                 <b>Nonlinear Score :</b> ${row['nonlinear'].toFixed(2)}<br>
                 <b>Enrollment:</b> ${row['School Enrollment']}<br>
@@ -97,10 +123,10 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
             `
         }));
 
-        const plotData2 = calculatedData.filter(row => schoolNames.includes(row['School Name'])).map(row => ({
+        const plotData2 = calculatedData.filter(row =>  (selectedSchoolTypes.length === 0 || selectedSchoolTypes.includes(row['School Type']) || selectedSchoolTypes.includes('Pipeline Schools') && pipelineSchools.includes(row['School Name']))).map(row => ({
             x: row['Percent Economically Disadvantaged'] * 100,
             y: row['nonlinear'],
-            color: colors[row['Overall Accountability Rating']],
+            color: colors[getRatings(limitToTwoDecimals(row['nonlinear']))],
             name: row['School Name'],
             label: row['School Name'].charAt(0),
             additionalInfo: `
@@ -126,7 +152,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
                 zoomType: 'xy'
             },
             title: {
-                text: 'DPI Score vs ECD Percentage with Rating Color Mapping'
+                text: 'DPI Score vs ECD Percentage'
             },
             xAxis: {
                 title: {
@@ -193,7 +219,7 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
                 zoomType: 'xy'
             },
             title: {
-                text: 'New Score vs ECD Percentage with Rating Color Mapping'
+                text: 'New Score vs ECD Percentage'
             },
             xAxis: {
                 title: {
@@ -258,27 +284,59 @@ const EligibilityCalculator = ({ fileData, schoolNames , calculatedData}) => {
         setChartOptions2(options2);
     };
 
+    const schoolTypes = [
+        'Elementary School',
+        'High School',
+        'Elementary/Secondary School',
+        'Middle School',
+        'Pipeline Schools',
+    ];
+
     return (
         <div className='eligibility-calculator'>
-            {fileData && schoolNames && (
-                <>
-                    <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions1}
-                    />
-                    <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions2}
-                    />
-                    <div className="color-map">
-                        <div><span style={{ backgroundColor: 'green' }}></span>Significantly Exceeds Expectations</div>
-                        <div><span style={{ backgroundColor: 'blue' }}></span>Exceeds Expectations</div>
-                        <div><span style={{ backgroundColor: 'black' }}></span>Meets Expectations</div>
-                        <div><span style={{ backgroundColor: 'pink' }}></span>Meets Few Expectations</div>
-                        <div><span style={{ backgroundColor: 'red' }}></span>Fails to Meet Expectations</div>
-                    </div>
-                </>
-            )}
+            <div className='eligibility-calculator-navbar'><span>No of schools {filteredSchools.length} </span></div>
+            <div className='filters-chart-wrapper'>
+            <div className="checkbox-filters">
+                <div className='checkbox-filters-title-text'>I'm looking for School Type</div>
+                <div className='checkbox-filters-school-types'>
+                {schoolTypes.map((type) => (
+                        <label key={type}>
+                            <input
+                                type="checkbox"
+                                name={type}
+                                checked={selectedSchoolTypes.includes(type)}
+                                onChange={handleCheckboxChange}
+                            />
+                        <span>{type}</span> 
+                        </label>
+                    ))}
+                </div>
+            </div>
+            <div className='eligibility-calculator-maps'>
+                {fileData && schoolNames && (
+                    <>
+                        <HighchartsReact
+                            highcharts={Highcharts}
+                            options={chartOptions2}
+                        />
+                        <HighchartsReact
+                            highcharts={Highcharts}
+                            options={chartOptions1}
+                        />
+
+                        <div className="color-map">
+                            <div><span style={{ backgroundColor: 'green' }}></span>Significantly Exceeds Expectations</div>
+                            <div><span style={{ backgroundColor: 'blue' }}></span>Exceeds Expectations</div>
+                            <div><span style={{ backgroundColor: 'black' }}></span>Meets Expectations</div>
+                            <div><span style={{ backgroundColor: 'pink' }}></span>Meets Few Expectations</div>
+                            <div><span style={{ backgroundColor: 'red' }}></span>Fails to Meet Expectations</div>
+                        </div>
+                    </>
+                )}
+            </div>
+            </div>
+
+
         </div>
     );
 };

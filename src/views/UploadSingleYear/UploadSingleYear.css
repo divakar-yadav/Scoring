@@ -1,0 +1,19 @@
+.UploadSingleYear .add-button {
+    display: flex;
+    justify-content: center;
+    padding: 13px;
+    border: 1px solid lightgray;
+    width: 7%;
+    margin: auto;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #3e4ee1;
+    border-radius: 4px;
+    box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
+    cursor: pointer;
+    margin-top: 40px;
+}
+.UploadSingleYear {
+    padding-top: 40px;
+}

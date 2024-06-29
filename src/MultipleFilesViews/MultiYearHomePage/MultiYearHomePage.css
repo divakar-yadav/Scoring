@@ -1,0 +1,480 @@
+.kb-data-title {
+    text-align: center;
+}
+.school-cards {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 200px;
+    padding-top: 40px;
+}
+.school-cards-sidenav-wrapper {
+    display: flex;
+    min-width: 70%;
+    max-width: 70%;
+    align-self: center;
+    justify-content: space-between;
+    /* margin-top: 20px; */
+}
+.cards-container-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 83%;
+    padding: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 185px;
+    max-height: 211px;
+}
+
+.card-content {
+    /* margin-bottom: 8px; */
+    display: flex;
+    width: 100%;
+}
+.card-content strong {
+    display: inline-block;
+    width: 150px;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.page-button {
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    margin: 4px;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    min-width: 70px;
+    border-radius: 5px;
+}
+
+.page-button.active {
+    background-color: #3e4ee1;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.page-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.schools-result-cards {
+    width: 70%;
+}
+.sidenav {
+    width: 30%;
+}
+.card-content-title {
+    font-size: larger;
+    font-size: 20px;
+    font-weight: 600;
+}
+.card-content-main-info-title {
+    font-size: 17px;
+    font-weight: 600;
+    text-align: start;
+}
+.card-content-main-info-meta {
+    display: flex;
+    font-weight: 500;
+    margin-top: 10px;
+    font-size: 11px;
+}
+.card-content-main-info-2 {
+    padding: 15px;
+    max-width: 25%;
+    min-width: 25%;
+    flex-wrap: wrap;
+}
+.card-content-main-info-description {
+    font-size: 12px;
+    font-weight: 300;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+.card-content-banner img {
+    max-height: 186px;
+    border-radius: 7px;
+}
+.card-content-other-info-1-key {
+    font-size: 11px;
+}
+.card-content-other-info-1-value {
+    font-weight: 600;
+    margin-top: 10px;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+}
+.card-content-other-info {
+    border-left: 1px solid lightgray;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    color: #3e4ee1;
+    min-width: 20%;
+}
+.card-content-other-info-2 {
+    margin-top: 10px;
+}
+.card-content-other-info-3 {
+    margin-top: 10px;
+}
+
+.card-content-nav {
+    border-top: 1px solid lightgray;
+    min-height: 2px;
+    min-width: 100%;
+    background-color: #3e4ee1;
+    border-radius: 2px;
+}
+
+.sidenav {
+    flex: 0 0 250px;
+    padding: 20px;
+    padding-top: 5px;
+    padding-right: 0px;
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidenav-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sidenav-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #730ed0;
+}
+
+.sidenav-item label {
+    font-size: 12px;
+}
+
+.sidenav-item input {
+    margin-right: 10px;
+}
+
+.sidenav-section {
+    margin-bottom: 20px;
+}
+
+.sidenav-section-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.sidenav-section input{
+    outline: none;
+}
+.sidenav-section-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav-section input[type="text"] {
+    min-width: -webkit-fill-available;
+    margin-top: 12px;
+}
+
+
+.sidenav-section  select {
+    min-width: -webkit-fill-available;
+}
+.filter-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    min-width: 100%;
+    max-width: 100%;
+    align-self: center;
+    padding: 16px 0;
+    flex-wrap: wrap;
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+}
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.filter-header-wrapper {
+    display: flex;
+    min-width: 70%;
+    justify-content: space-between;
+}
+.filter-header-chips {
+    display: flex;
+}
+.filter-header-sort {
+    display: flex;
+}
+.chip {
+    background-color: #d4c7e4;
+    padding: 4px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #893be7;
+    margin-left: 5px;
+}
+img.chip_cross_icon {
+    width: 10px;
+    background-color: #8fc1ed;
+    margin: 0 0;
+    border: 1px solid #77acda;
+    border-radius: 6px;
+    vertical-align: middle;
+}
+.chip span {
+    margin-right: 3px;
+}
+.filter-header-sort-text {
+    font-size: 12px;
+    font-weight: 700;
+    margin: auto;
+}
+.filter-header-sort select {
+    border: none;
+    font-size: 12px;
+    outline: none;
+}
+.filter-header-total-no-result {
+    font-weight: 600;
+}
+img.schools-utilities-compare-icon {
+    width: 25px;
+}
+img.schools-utilities-calculate-icon {
+    width: 25px;
+}
+img.schools-utilities-geo-icon {
+    width: 25px;
+}
+img.schools-utilities-analytics-icon {
+    width: 25px;
+}
+.schools-utilities-wrapper {
+    display: flex;
+    width: 70%;
+    justify-content: center;
+}
+.schools-utilities {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    padding-top: 0px;
+}
+img.schools-utilities-compare-icon {
+    width: 20px;
+    align-self: center;
+}
+img.schools-utilities-calculate-icon {
+    width: 20px;
+    align-self: center;
+}
+img.schools-utilities-geo-icon {
+    width: 20px;
+    align-self: center;
+}
+img.schools-utilities-analytics-icon {
+    width: 20px;
+    align-self: center;
+}
+span.schools-utilities-compare-text {
+    align-self: center;
+    font-weight: 300;
+    color: black;
+    font-size: 14px;
+}
+span.schools-utilities-calculate-text {
+    align-self: center;
+    font-weight: 300;
+    color: black;
+    font-size: 14px;
+}
+span.schools-utilities-geo-text {
+    align-self: center;
+    font-weight: 300;
+    color: black;
+    font-size: 14px;
+}
+span.schools-utilities-analytics-text {
+    align-self: center;
+    font-weight: 300;
+    color: black;
+    font-size: 14px;
+}
+.schools-utilities-compare {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+    margin-left: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+.schools-utilities-compare:hover {
+    background-color: #ddd;
+}
+.schools-utilities-analytics {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+.schools-utilities-analytics:hover {
+    background-color: #ddd;
+}
+.schools-utilities-calculate {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+.schools-utilities-calculate:hover {
+    background-color: #ddd;
+}
+.schools-utilities-geo {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+.schools-utilities-geo:hover {
+    background-color: #ddd;
+}
+.kb-data-box form {
+    display: flex;
+    justify-content: center;
+}
+.chip-filter-container {
+    display: flex;
+    justify-content: start;
+    max-width: 100%;
+    padding: 10px 0;
+    gap: 10px;
+    padding-top: 20px;
+}
+
+.chip-filter {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chip-filter:hover {
+    background-color: #f0f0f0;
+}
+
+.chip-filter:active {
+    background-color: #e0e0e0;
+}
+
+.chip-filter:not(:last-child) {
+    margin-right: 10px; /* Adjust the space between chips if needed */
+}
+
+.chip-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px; /* Adjust the font size if needed */
+}
+.filter-header-chips-result-count-wrapper {
+    display: flex;
+}
+
+.card-content-main-info-school-type {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #3e4ee1;
+}
+.card-content-main-info-2 a {
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+}
+.card-content-main-info-2 a:hover {
+    text-decoration: underline;
+}
+.no_data_found {
+    font-size: 18px;
+    text-align: center;
+    color: #3e4ee1;
+    font-weight: 600;
+}
+.active_tab {
+    /* border: 1px solid #3e4ee1; */
+    background-color: #3e4ee1;
+    min-height: 2.5px;
+    max-width: 145px;
+    margin: auto;
+}
+span.card-content-other-info-1-rating {
+    font-size: 11px;
+}
+.navigate_to_upload_initials {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    cursor: pointer;
+}
+.navigate_to_upload_initials span {
+    padding: 12px;
+    background-color: #3e4ee1;
+    color: #fff;
+    border-radius: 4px;
+}
+.card-content-charts {
+    padding-top: 44px;
+    border-left: 1px solid lightgray;
+}

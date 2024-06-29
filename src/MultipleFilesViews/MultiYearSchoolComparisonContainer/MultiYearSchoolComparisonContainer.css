@@ -1,0 +1,52 @@
+.school-comparison-container {
+    width: 75%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+  
+.search-boxes {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border: 1px solid lightgray;
+  padding: 20px;
+  max-width: 90%;
+  margin: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+  .search-box {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+  }
+  
+  .search-box label {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .search-box input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    min-height: 20px;
+    font-size: 15px;
+}
+.school-comparison-calculator-year-filter {
+  border: 1px solid lightgray;
+  padding: 5px;
+  display: flex;
+  min-width: 50%;
+  display: flex;
+  /* margin: auto; */
+}
+.school-comparison-calculator-year-filter-container {
+  display: flex;
+  min-width: 76%;
+  max-width: 91%;
+  margin: auto;
+  justify-content: center;
+}
