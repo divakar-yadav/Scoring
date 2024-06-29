@@ -73,7 +73,7 @@ const MultiYearSchoolComparisonContainer = ({ schools }) => {
                 console.log('Current Year School 2:', item); // Debugging statement
               }}
               className='eligibility-calculator-year-filter-year'
-              style={currentYearSchool2 === item ? { backgroundColor: '#3e4ee1', color: '#fff' } : null}
+              style={currentYearSchool2 === item ? { backgroundColor: '#3e4ee1', color: '#fff', fontWeight:600 } : null}
             >
               {item}
             </div>
