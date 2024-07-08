@@ -1,7 +1,7 @@
 .UploadMultipleYears {
     padding: 20px;
 }
-.add-button {
+.upload-section {
     display: flex;
     justify-content: center;
     padding: 10px;
@@ -17,7 +17,23 @@
     margin-left: 10px;
     margin-right: 10px;
 }
-
+.add-button {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid lightgray;
+    width: 7%;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: #fff;
+    color: #3e4ee1;
+    /* color: #8f96defa; */
+    border-radius: 3px;
+    box-shadow: 0px 1px 4px rgb(0 0 0 / 16%);
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 .proceed-button {
     display: flex;
     justify-content: center;
@@ -35,9 +51,24 @@
     margin-right: 10px;
 }
 
-
-.UploadMultipleYears_add-button {
+.UploadMultipleYears_nav-buttons {
     display: flex;
     width: 100%;
     justify-content: center;
+    margin-top: 10px;
+}
+.UploadMultipleYears_add {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
+    border-top: 1px solid lightgray;
+}
+.UploadMultipleYears_add_button_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid lightgray;
 }

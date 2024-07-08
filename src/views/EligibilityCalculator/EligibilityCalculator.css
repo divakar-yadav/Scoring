@@ -7,15 +7,17 @@
     flex-direction: column;
 }
 .color-map {
-    margin-top: 20px;
+    margin-top: 0px !important;
 }
-
 .color-map div {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
 }
-
+.color-map-text {
+    font-weight: 600;
+    padding-bottom: 20px;
+}
 .color-map span {
     display: inline-block;
     width: 20px;
@@ -100,4 +102,7 @@
     padding-left: 206px;
     padding-top: 8px;
     font-weight: 600;
+}
+.eligibility-calculator-maps-2{
+    margin-top: 40px;
 }

@@ -69,8 +69,8 @@
   
   #loading-content:before {
     border: 3px solid transparent;
-    border-top-color: #D4CC6A;
-    border-bottom-color: #D4CC6A;
+    border-top-color: #3e4ee1;
+    border-bottom-color: #3e4ee1;
     border-radius: 50%;
     -webkit-animation: loader 3s linear infinite;
       -moz-animation: loader 2s linear infinite;
@@ -80,8 +80,8 @@
   
   #loading-content:after {
     border: 3px solid transparent;
-    border-top-color: #84417C;
-    border-bottom-color: #84417C;
+    border-top-color: #2caffe;
+    border-bottom-color: #2caffe;
     border-radius: 50%;
     -webkit-animation: loader 1.5s linear infinite;
     animation: loader 1.5s linear infinite;

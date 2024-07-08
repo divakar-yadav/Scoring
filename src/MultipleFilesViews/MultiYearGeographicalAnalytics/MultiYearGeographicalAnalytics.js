@@ -19,26 +19,37 @@ import school_black from '../../assets/school_black.png';
 import school_pink from '../../assets/school_pink.png';
 import school_blue from '../../assets/school_blue.png';
 
-const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames }) => {
+const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
+
+  const getUniqueYears = (data) => {
+    const yearsSet = new Set();
+    data.forEach(innerArray => {
+      innerArray.forEach(school => {
+        yearsSet.add(school['School Year']);
+      });
+    });
+    return Array.from(yearsSet);
+  };
+
+  const uniqueYears = getUniqueYears(calculatedData);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const [currentYear, setCurrentYear] = useState('2022-23');
+  const [currentYear, setCurrentYear] = useState(uniqueYears[0]);
 
-  const schoolTypes = [
-    'Elementary School',
-    'High School',
-    'Elementary/Secondary School',
-    'Middle School',
-    'Pipeline Schools',
-  ];
-
-  const handleTypeChange = (type) => {
-    setSelectedTypes((prevSelected) =>
-      prevSelected.includes(type)
-        ? prevSelected.filter((t) => t !== type)
-        : [...prevSelected, type]
+  useEffect(() => {
+    let initialSchoolTypes = filters.schoolType;
+    if (filters.pipeline) {
+      initialSchoolTypes = [...initialSchoolTypes, 'Pipeline Schools'];
+    }
+    setSelectedTypes(initialSchoolTypes);
+    const filtered = calculatedData.filter((school) =>
+      initialSchoolTypes.length === 0 ||
+      initialSchoolTypes.includes(school['School Type']) ||
+      (initialSchoolTypes.includes('Pipeline Schools') && schoolNames.includes(school['School Name']))
     );
-  };
+
+    setFilteredData(filtered);
+  }, [filters, calculatedData, schoolNames]);
 
   const getPointer = (score) => {
     if (score < 40) {
@@ -59,7 +70,7 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames }) => {
     if (score < 40) {
       return '#e31c1d';
     } else if (score >= 40 && score < 50) {
-      return '#9A0BD2';
+      return '#bc3f54d4';
     } else if (score >= 50 && score < 60) {
       return '#000';
     } else if (score >= 60 && score < 70) {
@@ -74,17 +85,17 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames }) => {
     return data.map(innerArray => innerArray.filter(school => school['School Year'] === year)).flat();
   };
 
-  const getUniqueYears = (data) => {
-    const yearsSet = new Set();
-    data.forEach(innerArray => {
-      innerArray.forEach(school => {
-        yearsSet.add(school['School Year']);
-      });
-    });
-    return Array.from(yearsSet);
-  };
 
-  const uniqueYears = getUniqueYears(calculatedData);
+  useEffect(() => {
+    if (selectedTypes.length === 0) {
+      setFilteredData(calculatedData);
+    } else {
+      setFilteredData(calculatedData.filter((school) =>
+        selectedTypes.includes(school['School Type']) ||
+        (selectedTypes.includes('Pipeline Schools') && schoolNames.includes(school['School Name']))
+      ));
+    }
+  }, [selectedTypes, calculatedData, schoolNames]);
 
   useEffect(() => {
     const initializeMap = (data) => {
@@ -201,7 +212,8 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames }) => {
 
   return (
     <div>
-      <div className='eligibility-calculator-year-filter'>
+      <div className='navbar-filter-wrapper'>
+      <div className='eligibility-calculator-year-filter-2'>
       <div className="school-count">
         Number of schools: {filteredData.length}
       </div>
@@ -219,13 +231,6 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames }) => {
       </div>
   
       </div>
-      <div className="filter-container">
-        {schoolTypes.map((type) => (
-          <div key={type} className="filter-item">
-            <input type="checkbox" id={type} value={type} onChange={() => handleTypeChange(type)} />
-            <label htmlFor={type}>{type}</label>
-          </div>
-        ))}
       </div>
 
       <div id="map" className="map"></div>
@@ -234,3 +239,5 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames }) => {
 };
 
 export default MultiYearGeographicalAnalytics;
+
+

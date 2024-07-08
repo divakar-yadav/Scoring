@@ -68,15 +68,15 @@ const getRatings = (score) => {
       </div>
 
           <div className='school_detail_ratings'>
+          <div className='school_detail_ratings_new_score'>
+              <div className='school_detail_ratings_new_score_text'> Avg Weighted Score</div>
+              <span className='school_detail_ratings_new_score_rating'>{getRatings(limitToTwoDecimals(row.average_weighted_score))}</span>
+              <span className='school_detail_ratings_new_score_score'>{limitToTwoDecimals(row.average_weighted_score)}</span>
+          </div>
             <div className='school_detail_ratings_dpi'>
               <div className='school_detail_ratings_dpi_text'>Avg DPI Score</div>
               <span className='school_detail_ratings_dpi_rating'>{getRatings(row['average_dpi'])}</span>
               <span className='school_detail_ratings_dpi_score'>{limitToTwoDecimals(row['average_dpi'])}</span>
-            </div>
-            <div className='school_detail_ratings_new_score'>
-              <div className='school_detail_ratings_new_score_text'>New Score</div>
-              <span className='school_detail_ratings_new_score_rating'>{getRatings(limitToTwoDecimals(row.average_weighted_score))}</span>
-              <span className='school_detail_ratings_new_score_score'>{limitToTwoDecimals(row.average_weighted_score)}</span>
             </div>
           </div>
           {/* <div className='school_type'>{row['Locale description']}</div> */}

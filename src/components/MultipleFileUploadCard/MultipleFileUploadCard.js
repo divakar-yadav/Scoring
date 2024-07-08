@@ -5,7 +5,7 @@ import bin from '../../assets/bin.png';
 const MultipleFileUploadCard = (props) => {
   const [yearsData, setYearsData] = useState([]);
 
-  const { id, handleDeleteCard, handleFileUpload } = props;
+  const { id, handleDeleteCard, handleFileUpload, hideDeleteButton } = props;
 
   const handleFileChange = (event, type) => {
     const file = event.target.files[0];
@@ -80,13 +80,13 @@ const MultipleFileUploadCard = (props) => {
                 {yearsData.find((data) => data.type === "mapping").timestamp}
               </span>
             </div>
-
             <span
               onClick={() => handleDelete("mapping")}
               className="delete-button"
             >
               Delete
             </span>
+            
           </div>
         )}
       </div>
@@ -123,9 +123,11 @@ const MultipleFileUploadCard = (props) => {
           </div>
         )}
       </div>
-      <div className="UploadMultipleYears_card_delete_button">
-        <img onClick={() => handleDeleteCard(id)} className="UploadMultipleYears_card_delete_button_icon" src={bin} alt="Delete" />
-      </div>
+      {hideDeleteButton===true ? null :  
+            <div className="UploadMultipleYears_card_delete_button">
+            <img onClick={() => handleDeleteCard(id)} className="UploadMultipleYears_card_delete_button_icon" src={bin} alt="Delete" />
+          </div>
+      }           
     </div>
   );
 };

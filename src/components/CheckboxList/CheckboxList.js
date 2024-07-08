@@ -4,7 +4,7 @@ import './CheckboxList.css';
 const CheckboxList = ({ title, options, onCheckboxChange }) => {
   return (
     <div className="checkbox-list">
-      <h3 className="checkbox-list-title">{title}</h3>
+      {/* <h3 className="checkbox-list-title">{title}</h3> */}
       <ul className="checkbox-list-items">
         {options.map((option, index) => (
           <li key={index} className="checkbox-list-item">

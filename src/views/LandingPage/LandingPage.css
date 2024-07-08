@@ -40,6 +40,9 @@ span.landingpage_multiple_year_text {
     cursor: pointer;
     padding: 10px;
 }
+.landingpage_single_year_wrapper:hover{
+    background-color: aliceblue;
+}
 .landingpage_multiple_year_wrapper {
     border: 1px solid #939393;
     border-radius: 5px;
@@ -47,6 +50,10 @@ span.landingpage_multiple_year_text {
     min-width: 265px;
     cursor: pointer;
     padding: 10px;
+}
+
+.landingpage_multiple_year_wrapper:hover {
+    background-color: aliceblue;
 }
 img.landingpage_single_year_icon {
     margin: auto;
@@ -71,9 +78,112 @@ span.landingpage_single_year_arrow {
 }
 .header_text_product_name {
     color: #3e4ee1;
-    font-size: 2.45rem;
+    font-size: 3.45rem;
     font-weight: 800;
     text-align: center;
     line-height: 1.2em;
     margin-bottom: 70px;
+}
+/* LandingPage.css */
+
+.landingPage {
+    text-align: center;
+  }
+  
+  .header_text_product_name {
+    font-size: 2.5rem;
+    margin-top: 20px;
+  }
+  
+  .header_text {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+  }
+  
+  .landing_page_content {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .landingpage_single_year,
+  .landingpage_multiple_year {
+    text-decoration: none;
+  }
+  
+  .landingpage_single_year_wrapper,
+  .landingpage_multiple_year_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background: #fff;
+    transition: transform 0.2s;
+  }
+  
+  .landingpage_single_year_wrapper:hover,
+  .landingpage_multiple_year_wrapper:hover {
+    transform: scale(1.05);
+  }
+  
+  .landingpage_single_year_icon,
+  .landingpage_multiple_year_icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .landingpage_single_year_text,
+  .landingpage_multiple_year_text {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .landingpage_single_year_arrow,
+  .landingpage_multiple_year_arrow {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .instructions_container {
+    /* max-width: 800px; */
+    margin: auto;
+    text-align: start;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+.instructions_container h1 {
+    text-align: center;
+    color: #333;
+}
+.instructions_container h2 {
+    color: #3e4ee1;
+}
+.instructions_container .instructions_containerp, ul {
+    color: #555;
+}
+.instructions_container ul {
+    list-style-type: none;
+    padding: 0;
+}
+.instructions_container li::before {
+    content: "✔️";
+    color: #4CAF50;
+    margin-right: 10px;
+}
+.instructions_container h1 {
+    font-size: 20px;
+}
+.instructions_container h2 {
+    font-size: 15px;
+    font-weight: 400;
+}
+.instructions_container p{
+    font-size: 15px;
 }

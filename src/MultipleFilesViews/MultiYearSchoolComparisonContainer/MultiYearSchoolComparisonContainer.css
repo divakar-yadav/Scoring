@@ -50,5 +50,7 @@
   max-width: 91%;
   margin: auto;
   justify-content: center;
-  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+}
+.school-count {
+  min-width: 13%;
 }

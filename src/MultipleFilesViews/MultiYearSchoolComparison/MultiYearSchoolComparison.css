@@ -49,3 +49,16 @@
 .school-comparison h2 {
   font-size: 18px;
 }
+.eligibility-calculator-year-filter-year {
+  padding: 4px;
+  border-radius: 2px;
+  margin-left: 1px;
+  cursor: pointer;
+  margin-right: 1px;
+  font-weight: 600;
+}
+.school-count {
+  min-width: 13%;
+  padding: 7px;
+  font-weight: 500;
+}

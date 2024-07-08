@@ -22,7 +22,14 @@
     min-width: 83%;
     padding: 20px;
 }
-
+.school-cards-sidenav-wrapper {
+    display: flex;
+    min-width: 70%;
+    max-width: 70%;
+    align-self: center;
+    justify-content: center;
+    /* margin-top: 20px; */
+}
 .card {
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -230,7 +237,7 @@
 }
 .filter-header-wrapper {
     display: flex;
-    min-width: 70%;
+    min-width: 64%;
     justify-content: space-between;
 }
 .filter-header-chips {
@@ -288,9 +295,11 @@ img.schools-utilities-analytics-icon {
     display: flex;
     width: 70%;
     justify-content: center;
+    margin: auto;
 }
 .schools-utilities {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: 20px;
     padding-top: 0px;
@@ -477,4 +486,8 @@ span.card-content-other-info-1-rating {
 .card-content-charts {
     padding-top: 44px;
     border-left: 1px solid lightgray;
+}
+.navbar_filters {
+    margin: auto;
+    margin-top: 30px;
 }

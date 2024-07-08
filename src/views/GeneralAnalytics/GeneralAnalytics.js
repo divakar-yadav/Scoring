@@ -3,7 +3,20 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import './GeneralAnalytics.css';
 
-const GeneralAnalytics = ({ data }) => {
+const GeneralAnalytics = ({ data, setHideFilters }) => {
+
+
+
+    useEffect(()=>{
+        setHideFilters(true)
+
+        return () => {
+            setHideFilters(false)
+
+          };
+        }
+)
+
 
     const getTooltipInfo = (row) => `
     <b>School Name:</b> ${row['School Name']}<br>

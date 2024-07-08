@@ -3,17 +3,34 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import './EligibilityCalculator.css';
 
-const EligibilityCalculator = ({ fileData, schoolNames, calculatedData }) => {
+const EligibilityCalculator = ({ fileData, schoolNames, calculatedData, filters }) => {
     const [chartOptions1, setChartOptions1] = useState({});
     const [chartOptions2, setChartOptions2] = useState({});
     const [selectedSchoolTypes, setSelectedSchoolTypes] = useState([]);
+    const [pipelineSchools, setPipelineSchools] = useState([]);
+
+
+
+    useEffect(() => {
+        if (fileData && schoolNames) {
+            let initialSchoolTypes = filters.schoolType;
+            if (filters.pipeline) {
+                initialSchoolTypes = [...initialSchoolTypes, 'Pipeline Schools'];
+            }
+            setSelectedSchoolTypes(initialSchoolTypes);
+            setPipelineSchools(schoolNames)
+        }
+    }, [fileData, schoolNames, filters]);
+
 
     useEffect(() => {
         if (fileData && schoolNames) {
             processData(fileData, schoolNames, selectedSchoolTypes);
         }
+
     }, [fileData, schoolNames, selectedSchoolTypes]);
-    const pipelineSchools = [
+
+    const pipelineSchools1 = [
         "Bruce Guadalupe",
         "Forest Home Elementary",
         "Milwaukee College Preparatory School -- 36th Street Campus",
@@ -77,7 +94,7 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData }) => {
 
         return category;
     }
-    const filteredSchools = calculatedData.filter(row =>  (selectedSchoolTypes.length === 0 || selectedSchoolTypes.includes(row['School Type']) || selectedSchoolTypes.includes('Pipeline Schools') && pipelineSchools.includes(row['School Name']) ))
+    const filteredSchools = calculatedData.filter(row =>  (filters.schoolType.length === 0 || filters.schoolType.includes(row['School Type']) || selectedSchoolTypes.includes('Pipeline Schools') && pipelineSchools.includes(row['School Name']) ))
 
     const processData = (data, schoolNames, selectedSchoolTypes) => {
         const colors = {
@@ -149,7 +166,8 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData }) => {
         const options1 = {
             chart: {
                 type: 'scatter',
-                zoomType: 'xy'
+                zoomType: 'xy',
+                marginTop: 40
             },
             title: {
                 text: 'DPI Score vs ECD Percentage'
@@ -297,7 +315,7 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData }) => {
             <div className='eligibility-calculator-navbar'><span>No of schools {filteredSchools.length} </span></div>
             <div className='filters-chart-wrapper'>
             <div className="checkbox-filters">
-                <div className='checkbox-filters-title-text'>I'm looking for School Type</div>
+                {/* <div className='checkbox-filters-title-text'>I'm looking for School Type</div>
                 <div className='checkbox-filters-school-types'>
                 {schoolTypes.map((type) => (
                         <label key={type}>
@@ -310,33 +328,35 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData }) => {
                         <span>{type}</span> 
                         </label>
                     ))}
-                </div>
-            </div>
-            <div className='eligibility-calculator-maps'>
-                {fileData && schoolNames && (
-                    <>
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={chartOptions2}
-                        />
-                        <HighchartsReact
-                            highcharts={Highcharts}
-                            options={chartOptions1}
-                        />
-
-                        <div className="color-map">
+                </div> */}
+                <div className="color-map">
+                            <div className='color-map-text'>Color Map</div>
                             <div><span style={{ backgroundColor: 'green' }}></span>Significantly Exceeds Expectations</div>
                             <div><span style={{ backgroundColor: 'blue' }}></span>Exceeds Expectations</div>
                             <div><span style={{ backgroundColor: 'black' }}></span>Meets Expectations</div>
                             <div><span style={{ backgroundColor: 'pink' }}></span>Meets Few Expectations</div>
                             <div><span style={{ backgroundColor: 'red' }}></span>Fails to Meet Expectations</div>
                         </div>
+            </div>
+            <div className='eligibility-calculator-maps'>
+                {fileData && schoolNames && (
+                    <>
+                    <div className='eligibility-calculator-maps-1'>
+                        <HighchartsReact
+                                highcharts={Highcharts}
+                                options={chartOptions2}
+                            />
+                    </div>
+                    <div className='eligibility-calculator-maps-2'>
+                        <HighchartsReact
+                                highcharts={Highcharts}
+                                options={chartOptions1}
+                            />
+                    </div>
                     </>
                 )}
             </div>
             </div>
-
-
         </div>
     );
 };

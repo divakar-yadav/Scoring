@@ -3,16 +3,14 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import './MultiYearEligibilityCalculator.css';
 
-const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData }) => {
+const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData, filters }) => {
     const getUniqueYears = (data) => {
         const yearsSet = new Set();
-
         data.forEach(innerArray => {
             innerArray.forEach(school => {
                 yearsSet.add(school['School Year']);
             });
         });
-
         return Array.from(yearsSet);
     };
 
@@ -23,12 +21,22 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData 
     const [selectedSchoolTypes, setSelectedSchoolTypes] = useState([]);
     const [currentYear, setCurrentYear] = useState(uniqueYears[0]);
     const [filteredSchools, setFilteredSchools] = useState([]);
+    const [pipelineSchools, setPipelineSchools] = useState([]);
+
+    useEffect(() => {
+        let initialSchoolTypes = filters.schoolType || [];
+        if (filters.pipeline) {
+            initialSchoolTypes = [...initialSchoolTypes, 'Pipeline Schools'];
+        }
+        setPipelineSchools(schoolNames)
+        setSelectedSchoolTypes(initialSchoolTypes);
+    }, [filters]);
 
     useEffect(() => {
         processData(aggregatedData, schoolNames, selectedSchoolTypes, currentYear);
-    }, [currentYear, selectedSchoolTypes]);
+    }, [currentYear, selectedSchoolTypes, aggregatedData, schoolNames]);
 
-    const pipelineSchools = [
+    const pipelineSchools1 = [
         "Bruce Guadalupe",
         "Forest Home Elementary",
         "Milwaukee College Preparatory School -- 36th Street Campus",
@@ -60,44 +68,19 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData 
         "Golda Meir School"
     ];
 
-    const handleCheckboxChange = (event) => {
-        const { name, checked } = event.target;
-
-        setSelectedSchoolTypes((prevSelectedSchoolTypes) => {
-            if (checked) {
-                return [...prevSelectedSchoolTypes, name];
-            } else {
-                return prevSelectedSchoolTypes.filter((type) => type !== name);
-            }
-        });
-    };
-
-    const limitToTwoDecimals = (num) => {
-        return parseFloat(num.toFixed(2));
-    };
+    const limitToTwoDecimals = (num) => parseFloat(num.toFixed(2));
 
     const getRatings = (score) => {
-        let category = '';
-
-        if (score < 40) {
-            category = 'Fails to Meet Expectations';
-        } else if (score >= 40 && score < 50) {
-            category = 'Meets Few Expectations';
-        } else if (score >= 50 && score < 60) {
-            category = 'Meets Expectations';
-        } else if (score >= 60 && score < 70) {
-            category = 'Exceeds Expectations';
-        } else if (score >= 70) {
-            category = 'Significantly Exceeds Expectations';
-        }
-
-        return category;
+        if (score < 40) return 'Fails to Meet Expectations';
+        if (score >= 40 && score < 50) return 'Meets Few Expectations';
+        if (score >= 50 && score < 60) return 'Meets Expectations';
+        if (score >= 60 && score < 70) return 'Exceeds Expectations';
+        return 'Significantly Exceeds Expectations';
     };
 
     const filterDataByYear = (data, year) => {
-        return data.map(innerArray => {
-            return innerArray.filter(school => school['School Year'] === year);
-        }).filter(filteredArray => filteredArray.length > 0);
+        return data.map(innerArray => innerArray.filter(school => school['School Year'] === year))
+                    .filter(filteredArray => filteredArray.length > 0);
     };
 
     const processData = (data, schoolNames, selectedSchoolTypes, year) => {
@@ -238,7 +221,7 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData 
             chart: {
                 type: 'scatter',
                 zoomType: 'xy',
-                marginRight: 40
+                marginRight: 40,
             },
             title: {
                 text: 'New Score vs ECD Percentage'
@@ -327,39 +310,30 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData 
             </div>
             <div className='filters-chart-wrapper'>
                 <div className="checkbox-filters">
-                    <div className='checkbox-filters-title-text'>I'm looking for School Type</div>
-                    <div className='checkbox-filters-school-types'>
-                        {schoolTypes.map((type) => (
-                            <label key={type}>
-                                <input
-                                    type="checkbox"
-                                    name={type}
-                                    checked={selectedSchoolTypes.includes(type)}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <span>{type}</span>
-                            </label>
-                        ))}
+                    <div className="color-map">
+                            <div className='color-map-text'>Color Map</div>
+                            <div><span style={{ backgroundColor: 'green' }}></span>Significantly Exceeds Expectations</div>
+                            <div><span style={{ backgroundColor: 'blue' }}></span>Exceeds Expectations</div>
+                            <div><span style={{ backgroundColor: 'black' }}></span>Meets Expectations</div>
+                            <div><span style={{ backgroundColor: 'pink' }}></span>Meets Few Expectations</div>
+                            <div><span style={{ backgroundColor: 'red' }}></span>Fails to Meet Expectations</div>
                     </div>
                 </div>
                 <div className='eligibility-calculator-maps'>
                     {fileData && schoolNames && (
                         <>
+                        <div className='multi-eligibility-calculator-maps-1'>
                             <HighchartsReact
-                                highcharts={Highcharts}
-                                options={chartOptions2}
-                            />
+                                    highcharts={Highcharts}
+                                    options={chartOptions2}
+                                />
+                        </div>
+                        <div className='multi-eligibility-calculator-maps-2'>
                             <HighchartsReact
-                                highcharts={Highcharts}
-                                options={chartOptions1}
-                            />
-                            <div className="color-map">
-                                <div><span style={{ backgroundColor: 'green' }}></span>Significantly Exceeds Expectations</div>
-                                <div><span style={{ backgroundColor: 'blue' }}></span>Exceeds Expectations</div>
-                                <div><span style={{ backgroundColor: 'black' }}></span>Meets Expectations</div>
-                                <div><span style={{ backgroundColor: 'pink' }}></span>Meets Few Expectations</div>
-                                <div><span style={{ backgroundColor: 'red' }}></span>Fails to Meet Expectations</div>
-                            </div>
+                                    highcharts={Highcharts}
+                                    options={chartOptions1}
+                                />
+                        </div>
                         </>
                     )}
                 </div>

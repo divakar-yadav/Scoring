@@ -11,7 +11,7 @@
     min-width: 70%;
     max-width: 70%;
     align-self: center;
-    justify-content: space-between;
+    justify-content: center;
     /* margin-top: 20px; */
 }
 .cards-container {
@@ -287,6 +287,7 @@ img.schools-utilities-analytics-icon {
     display: flex;
     width: 70%;
     justify-content: center;
+    margin: auto;
 }
 .schools-utilities {
     display: flex;
@@ -456,4 +457,14 @@ span.schools-utilities-analytics-text {
 }
 span.card-content-other-info-1-rating {
     font-size: 11px;
+}
+.navbar_filters {
+    margin: auto;
+    margin-top: 30px;
+    width: 57%;
+}
+.filter-header-wrapper {
+    display: flex;
+    min-width: 50% !important;
+    justify-content: space-between;
 }

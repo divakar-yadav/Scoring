@@ -22,14 +22,72 @@
   justify-content: center;
   padding: 10px;
 }
+
 .filter-item label {
   color: #3e4ee1;
   font-weight: 500;
 }
+
 .year-filter-wrapper {
   display: flex;
   margin-left: 12px;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   padding: 5px;
-  width: -webkit-fill-available;
+  /* width: -webkit-fill-available; */
+}
+
+.eligibility-calculator-year-filter-2 {
+  /* border: 1px solid lightgray; */
+  padding: 5px;
+  /* padding-left: 398px; */
+  /* justify-content: start; */
+  display: flex;
+  justify-items: legacy;
+  width: 52%;
+  margin: auto;
+}
+.navbar-filter-wrapper {
+  border: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 1px 6px 6px 2px rgba(60, 64, 67, .15);
+}
+
+/* MultiYearGeographicalAnalytics.css */
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid black;
+  bottom: 12px;
+  left: -50px;
+  min-width: 150px;
+  display: none;
+  z-index: 1000;
+}
+
+.ol-popup:after, .ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ol-popup:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-top-color: white;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+
+.ol-popup:before {
+  border-color: rgba(0, 0, 0, 0);
+  border-top-color: black;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
 }
