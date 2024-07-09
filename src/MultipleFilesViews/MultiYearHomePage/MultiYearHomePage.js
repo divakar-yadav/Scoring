@@ -737,15 +737,6 @@ const MultiYearHomePage = () => {
                                         {currentTab === 'Eligibility' ? <div className='active_tab'></div> : null}
                                     </div>
                                     </Link>
-                                    <Link to={updateLastPathSegment(currentPath,'compare-schools')}>
-                                    <div>
-                                    <div className='schools-utilities-compare' onClick={()=>setCurrentTab('Compare Schools')}>
-                                            <img className='schools-utilities-compare-icon' src={schools} />
-                                            <span className='schools-utilities-compare-text' style={{color: currentTab==='Compare Schools' ? '#3e4ee1' : null, fontWeight: currentTab==='Compare Schools' ? 600 : 200}}>Compare Schools</span>
-                                        </div>
-                                        {currentTab === 'Compare Schools' ? <div className='active_tab'></div> : null}
-                                    </div>
-                                    </Link>
 
                                     <Link to={updateLastPathSegment(currentPath,'geographical-analytics')}>
                                     <div>
@@ -756,6 +747,17 @@ const MultiYearHomePage = () => {
                                         {currentTab === 'Geographical analytics' ? <div className='active_tab'></div> : null}
                                     </div>
                                     </Link>
+
+                                    <Link to={updateLastPathSegment(currentPath,'compare-schools')}>
+                                    <div>
+                                    <div className='schools-utilities-compare' onClick={()=>setCurrentTab('Compare Schools')}>
+                                            <img className='schools-utilities-compare-icon' src={schools} />
+                                            <span className='schools-utilities-compare-text' style={{color: currentTab==='Compare Schools' ? '#3e4ee1' : null, fontWeight: currentTab==='Compare Schools' ? 600 : 200}}>Compare Schools</span>
+                                        </div>
+                                        {currentTab === 'Compare Schools' ? <div className='active_tab'></div> : null}
+                                    </div>
+                                    </Link>
+
                                     <Link to={updateLastPathSegment(currentPath,'general-analytics')}>
                                     <div>
                                     <div className='schools-utilities-analytics' onClick={()=>setCurrentTab('General Analysis')}>
@@ -768,7 +770,7 @@ const MultiYearHomePage = () => {
                                 </div>
                             )}
                             {!hideFilters &&  <div className='navbar_filters'>
-                                            <CheckboxList title="I'm looking for School Type" options={schoolTypes} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
+                                            <CheckboxList title="I'm looking for School Type" options={schoolTypes} checkedList={filters.schoolType} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
                                             </div> }
                         </div>
                         <Routes>
@@ -805,9 +807,6 @@ const MultiYearHomePage = () => {
                                                 </div>
                                             </div>
                                             <div className='school-cards-sidenav-wrapper'>
-                                                {/* <div className='sidenav'>
-                                                    <CheckboxList title="I'm looking for School Type" options={schoolTypes} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
-                                                </div> */}
                                                 <div className='cards-container-2'>
                                                     {renderCardData().paginatedData.map((row, rowIndex) => (
                                                         <div key={rowIndex} className="card">
@@ -832,13 +831,13 @@ const MultiYearHomePage = () => {
                                                                     <CompareMultipleSeriesChart width={300} height={150} row = {row}/>
                                                                 </div>
                                                                 <div className='card-content-other-info'>
+                                                                <div className='card-content-other-info-3'>
+                                                                        <div className='card-content-other-info-1-key'>Avg. Weighted Score</div>
+                                                                        <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatings(limitToTwoDecimals(row.average_weighted_score))}</span>{limitToTwoDecimals(row.average_weighted_score)}</div>
+                                                                    </div>
                                                                     <div className='card-content-other-info-3'>
                                                                         <div className='card-content-other-info-1-key'>Avg. DPI Score</div>
                                                                         <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatings(row['average_dpi'])}</span><span>{limitToTwoDecimals(row['average_dpi'])}</span></div>
-                                                                    </div>
-                                                                    <div className='card-content-other-info-3'>
-                                                                        <div className='card-content-other-info-1-key'>Avg. Weighted Score</div>
-                                                                        <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatings(limitToTwoDecimals(row.average_weighted_score))}</span>{limitToTwoDecimals(row.average_weighted_score)}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -861,9 +860,9 @@ const MultiYearHomePage = () => {
                             } />
                             <Route path="/school" element={<MultiYearSchoolDetail />} />
                             <Route path="/calculate-elgibility" element={fileData.length > 0 && <MultiYearEligibilityCalculator filters={filters} fileData={fileData} schoolNames={pipeline} aggregatedData = {renderCardData().aggregatedData}/>} />
-                            <Route path="/general-analytics" element={fileData.length > 0 && <MultiYearGeneralAnalytics data={renderCardData().aggregatedData} filters={filters}/>} />
+                            <Route path="/general-analytics" element={fileData.length > 0 && <MultiYearGeneralAnalytics data={renderCardData().aggregatedData} filters={filters} setHideFilters={setHideFilters}/>} />
                             <Route path="/geographical-analytics" element={fileData.length > 0 && <MultiYearGeographicalAnalytics data={fileData} schoolNames={pipeline} calculatedData={renderCardData().aggregatedData} filters={filters}/>} />
-                            <Route path="/compare-schools" element={fileData.length > 0 && <MultiYearSchoolComparisonContainer schools={renderCardData().aggregatedData} filters={filters}/>} />
+                            <Route path="/compare-schools" element={fileData.length > 0 && <MultiYearSchoolComparisonContainer schools={renderCardData().aggregatedData} filters={filters} setHideFilters={setHideFilters}/>}  />
                         </Routes>
                     </div>
             )}

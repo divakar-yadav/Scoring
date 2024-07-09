@@ -187,3 +187,34 @@ span.landingpage_single_year_arrow {
 .instructions_container p{
     font-size: 15px;
 }
+.instruction_heading {
+    font-size: 20px;
+    color: #3e4ee1;
+}
+.instruction_heading_a  {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.instruction_heading {
+    font-size: 20px;
+    color: #3e4ee1;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.text-display {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #2b2b2b;
+    color: #dcdcdc;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    margin-left: 0px;
+}
+.json-display .copy-button {
+    right: 112px;
+}
+.copy-button {
+    right: 112px;
+}

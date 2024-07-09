@@ -16,7 +16,7 @@ import school_gps from '../../assets/school_gps.png';
 import school_green from '../../assets/school_green.png';
 import school_red from '../../assets/school_red.png';
 import school_black from '../../assets/school_black.png';
-import school_pink from '../../assets/school_pink.png';
+import school_orange from '../../assets/school_orange.png';
 import school_blue from '../../assets/school_blue.png';
 
 const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
@@ -45,7 +45,7 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
     if (score < 40) {
       return school_red;
     } else if (score >= 40 && score < 50) {
-      return school_pink;
+      return school_orange;
     } else if (score >= 50 && score < 60) {
       return school_black;
     } else if (score >= 60 && score < 70) {
@@ -60,7 +60,7 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
     if (score < 40) {
       return '#e31c1d';
     } else if (score >= 40 && score < 50) {
-      return '#bc3f54d4';
+      return '#E97451';
     } else if (score >= 50 && score < 60) {
       return '#000';
     } else if (score >= 60 && score < 70) {

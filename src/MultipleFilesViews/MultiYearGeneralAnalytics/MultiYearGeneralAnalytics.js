@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './MultiYearGeneralAnalytics.css';
 import ColumnChart from '../../components/ColumnChart/ColumnChart';
 
-const MultiYearGeneralAnalytics = ({ data }) => {
+const MultiYearGeneralAnalytics = ({ data, setHideFilters }) => {
   const [currentYear, setCurrentYear] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
 
@@ -12,6 +12,17 @@ const MultiYearGeneralAnalytics = ({ data }) => {
       setCurrentYear(initialYear);
     }
   }, [data]);
+
+
+  useEffect(()=>{
+    setHideFilters(true)
+
+    return () => {
+        setHideFilters(false)
+
+      };
+    }
+)
 
   useEffect(() => {
     if (currentYear) {
@@ -69,24 +80,24 @@ const MultiYearGeneralAnalytics = ({ data }) => {
   return (
     <div className='general-analytics'>
       <ColumnChart
-        title={'Average of DPI Scores moving with years.'}
-        categories={averageDPICategories}
-        seriesData={[{ name: 'DPI Scores', data: averageDPIData }]}
-      />
-      <ColumnChart
         title={'Average of Weighted Scores moving with years.'}
         categories={averageWeightedCategories}
         seriesData={[{ name: 'Weighted Scores', data: averageWeightedData }]}
       />
       <ColumnChart
-        title={'School with Highest DPI Score in Past years.'}
-        categories={highestDPICategories}
-        seriesData={[{ name: 'DPI Score', data: highestDPIData }]}
+        title={'Average of DPI Scores moving with years.'}
+        categories={averageDPICategories}
+        seriesData={[{ name: 'DPI Scores', data: averageDPIData }]}
       />
-      <ColumnChart
+     <ColumnChart
         title={'School with Highest Weighted Score in Past 5 years.'}
         categories={highestWeightedCategories}
         seriesData={[{ name: 'Weighted Score', data: highestWeightedData }]}
+      />
+      <ColumnChart
+        title={'School with Highest DPI Score in Past years.'}
+        categories={highestDPICategories}
+        seriesData={[{ name: 'DPI Score', data: highestDPIData }]}
       />
     </div>
   );

@@ -53,7 +53,7 @@ const UploadMultipleYears = () => {
                             return card;
                         }
                     } else if (type === 'pipeline_schools' && file.type === 'text/plain') {
-                        const textData = event.target.result.split('\n').map(line => line.trim()).filter(line => line !== '');;
+                        const textData = event.target.result.split('\n').map(line => line.trim()).filter(line => line !== '');
                         console.log(textData,"----textData----")
                         return { ...card, pipeLineSchools: textData };
                     } else {

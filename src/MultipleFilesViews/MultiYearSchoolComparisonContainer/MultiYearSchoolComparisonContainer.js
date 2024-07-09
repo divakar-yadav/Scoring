@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MultiYearSchoolComparisonContainer.css';
 import MultiYearSchoolComparison from '../MultiYearSchoolComparison/MultiYearSchoolComparison';
 
-const MultiYearSchoolComparisonContainer = ({ schools }) => {
+const MultiYearSchoolComparisonContainer = ({ schools, setHideFilters }) => {
   const [selectedSchool1, setSelectedSchool1] = useState(null);
   const [selectedSchool2, setSelectedSchool2] = useState(null);
   const [currentYearSchool1, setCurrentYearSchool1] = useState('2022-23');
   const [currentYearSchool2, setCurrentYearSchool2] = useState('2022-23');
+
+
+  useEffect(()=>{
+    setHideFilters(true)
+
+    return () => {
+        setHideFilters(false)
+
+      };
+    })
 
   // Filter data by the selected year
   const filterDataByYear = (data, year) => {

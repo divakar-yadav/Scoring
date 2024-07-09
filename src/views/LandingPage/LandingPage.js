@@ -3,6 +3,53 @@ import { Link } from 'react-router-dom';
 import './LandingPage.css';
 import single_year from '../../assets/single_year.png';
 import multiple_year from '../../assets/multiple_years.png';
+import JsonDisplay from '../../components/JsonDisplay/JsonDisplay';
+import TextDisplay from '../../components/TextDisplay/TextDisplay';
+
+
+const jsonData = {
+  "School Name": "School Name",
+  "Overall Accountability Score": "Overall Accountability Score",
+  "Overall Accountability Rating": "Overall Accountability Rating",
+  "School Type": "School Type",
+  "School Enrollment": "School Enrollment",
+  "School ELA Achievement Score": "ELA_Score",
+  "School Mathematics Achievement Score": "Math_Score",
+  "School ELA Growth Score": "ELA_Growth",
+  "School Mathematics Growth Score": "Math_Growth",
+  "School On-Track to Graduation Score": "Graduation_Score",
+  "Percent Economically Disadvantaged": "Percent_Disadvantaged"
+};
+
+const textData = `Bruce Guadalupe
+Forest Home Elementary
+Milwaukee College Preparatory School -- 36th Street Campus
+Milwaukee College Preparatory School -- 38th Street
+Milwaukee College Preparatory School -- Lloyd Street
+Milwaukee College Preparatory School: Lola Rowe North Campus
+Milwaukee Environmental Science Academy
+Notre Dame School of Milwaukee
+Prince of Peace
+Rocketship Southside Community Prep
+Rocketship Transformation Prep
+Saint Marcus Lutheran School
+Stellar Collegiate Charter School
+United Community Center Acosta Middle School
+Wedgewood Park School
+Carmen High School of Science and Technology South Campus
+Carmen High School of Science and Technology Southeast Campus
+Carmen Middle/High School of Science and Technology Northwest Campus
+Carmen Middle School South
+Cristo Rey Jesuit Milwaukee High School
+Dr Howard Fuller Collegiate Academy
+King International
+Reagan College Preparatory High
+HAPA-Hmong American Peace Academy K3-12
+Milwaukee Academy of Science
+Saint Augustine Preparatory Academy
+Kingdom Prep Lutheran High School
+Pilgrim Lutheran School
+Golda Meir School`
 
 const LandingPage = () => {
   return (
@@ -68,6 +115,16 @@ const LandingPage = () => {
             <li>Mapping file for 2020-21</li>
             <li>Pipeline file for 2020-21</li>
         </ul>
+        <div>
+          <div className='instruction_heading'>
+            Source for getting data file.
+          </div>
+            <a className='instruction_heading_a' target='#' href='https://apps2.dpi.wi.gov/reportcards/home'>https://apps2.dpi.wi.gov/reportcards/home</a>
+        </div>
+        <div className='instruction_heading'>Format for the mapping.txt file </div>
+        <JsonDisplay data={jsonData}/>
+        <div className='instruction_heading'>Format for the pipeline_schools.txt file </div>
+        <TextDisplay data={textData}/>
     </div>
     </div>
   );

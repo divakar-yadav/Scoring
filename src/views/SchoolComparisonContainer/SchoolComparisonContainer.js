@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SchoolComparison from '../SchoolComparison/SchoolComparison';
 import './SchoolComparisonContainer.css';
 
-const SchoolComparisonContainer = ({ schools }) => {
+const SchoolComparisonContainer = ({ schools, setHideFilters }) => {
   const [selectedSchool1, setSelectedSchool1] = useState(null);
   const [selectedSchool2, setSelectedSchool2] = useState(null);
+
+
+  useEffect(()=>{
+    setHideFilters(true)
+
+    return () => {
+        setHideFilters(false)
+
+      };
+    })
 
   const handleSelectSchool1 = (event) => {
     const schoolName = event.target.value;

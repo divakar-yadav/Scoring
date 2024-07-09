@@ -1,0 +1,45 @@
+.text-display {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #2b2b2b;
+    color: #dcdcdc;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .text-content {
+    padding-left: 20px;
+    white-space: pre-wrap; /* Ensures the text preserves whitespace and line breaks */
+  }
+  
+  .text-line {
+    margin-bottom: 10px;
+  }
+  
+  .copy-button, .download-button {
+    position: absolute;
+    top: 10px;
+    background-color: #3e4ee1;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  
+  .copy-button {
+    right: 130px;
+  }
+  
+  .download-button {
+    right: 10px;
+  }
+  
+  .copy-button:hover, .download-button:hover {
+    background-color: #3246b7;
+  }
+  

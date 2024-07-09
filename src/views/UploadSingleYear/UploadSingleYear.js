@@ -37,7 +37,7 @@ const UploadSingleYear = () => {
                             alert('Invalid JSON content in the mapping file');
                         }
                     } else if (type === 'pipeline_schools' && file.type === 'text/plain') {
-                        const textData = event.target.result.split('\n');
+                        const textData = event.target.result.split('\n').map(line => line.trim()).filter(line => line !== '');
                         updatedCard = { ...card, pipeLineSchools: textData };
                     } else {
                         alert('Invalid file type');

@@ -97,7 +97,7 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData,
             'Significantly Exceeds Expectations': 'green',
             'Exceeds Expectations': 'blue',
             'Meets Expectations': 'black',
-            'Meets Few Expectations': 'pink',
+            'Meets Few Expectations': '#FF7518',
             'Fails to Meet Expectations': 'red',
             'NR-DATA': 'gray'
         };
@@ -224,7 +224,7 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData,
                 marginRight: 40,
             },
             title: {
-                text: 'New Score vs ECD Percentage'
+                text: 'Weighted Score vs ECD Percentage'
             },
             xAxis: {
                 title: {
@@ -238,7 +238,7 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData,
             },
             yAxis: {
                 title: {
-                    text: 'New Score'
+                    text: 'Weighted Score'
                 }
             },
             legend: {
@@ -315,7 +315,7 @@ const MultiYearEligibilityCalculator = ({ fileData, schoolNames, aggregatedData,
                             <div><span style={{ backgroundColor: 'green' }}></span>Significantly Exceeds Expectations</div>
                             <div><span style={{ backgroundColor: 'blue' }}></span>Exceeds Expectations</div>
                             <div><span style={{ backgroundColor: 'black' }}></span>Meets Expectations</div>
-                            <div><span style={{ backgroundColor: 'pink' }}></span>Meets Few Expectations</div>
+                            <div><span style={{ backgroundColor: '#FF7518' }}></span>Meets Few Expectations</div>
                             <div><span style={{ backgroundColor: 'red' }}></span>Fails to Meet Expectations</div>
                     </div>
                 </div>

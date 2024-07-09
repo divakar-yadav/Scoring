@@ -679,16 +679,6 @@ const HomePage = () => {
                                         {currentTab === 'Eligibility' ? <div className='active_tab'></div> : null}
                                     </div>
                                     </Link>
-                                    <Link to={updateLastPathSegment(currentPath,'compare-schools')}>
-                                    <div>
-                                    <div className='schools-utilities-compare' onClick={()=>setCurrentTab('Compare Schools')}>
-                                            <img className='schools-utilities-compare-icon' src={schools} />
-                                            <span className='schools-utilities-compare-text' style={{color: currentTab==='Compare Schools' ? '#3e4ee1' : null, fontWeight: currentTab==='Compare Schools' ? 600 : 200}}>Compare Schools</span>
-                                        </div>
-                                        {currentTab === 'Compare Schools' ? <div className='active_tab'></div> : null}
-                                    </div>
-                                    </Link>
-
                                     <Link to={updateLastPathSegment(currentPath,'geographical-analytics')}>
                                     <div>
                                     <div className='schools-utilities-geo' onClick={()=>setCurrentTab('Geographical analytics')}>
@@ -696,6 +686,15 @@ const HomePage = () => {
                                             <span className='schools-utilities-geo-text' style={{color: currentTab==='Geographical analytics' ? '#3e4ee1' : null, fontWeight: currentTab==='Geographical analytics' ? 600 : 200}}>Map</span>
                                         </div>
                                         {currentTab === 'Geographical analytics' ? <div className='active_tab'></div> : null}
+                                    </div>
+                                    </Link>
+                                    <Link to={updateLastPathSegment(currentPath,'compare-schools')}>
+                                    <div>
+                                    <div className='schools-utilities-compare' onClick={()=>setCurrentTab('Compare Schools')}>
+                                            <img className='schools-utilities-compare-icon' src={schools} />
+                                            <span className='schools-utilities-compare-text' style={{color: currentTab==='Compare Schools' ? '#3e4ee1' : null, fontWeight: currentTab==='Compare Schools' ? 600 : 200}}>Compare Schools</span>
+                                        </div>
+                                        {currentTab === 'Compare Schools' ? <div className='active_tab'></div> : null}
                                     </div>
                                     </Link>
                                     <Link to={updateLastPathSegment(currentPath,'general-analytics')}>
@@ -710,7 +709,7 @@ const HomePage = () => {
                                 </div>
                             )}
                             {!hideFilters &&                                     <div className='navbar_filters'>
-                                            <CheckboxList title="I'm looking for School Type" options={schoolTypes} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
+                                            <CheckboxList title="I'm looking for School Type" checkedList = {filters.schoolType} options={schoolTypes} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
                                     </div> }
 
                         </div>
@@ -773,13 +772,13 @@ const HomePage = () => {
                                                                     <div className='card-content-main-info-school-type'>{row['District Name']}</div>
                                                                 </div>
                                                                 <div className='card-content-other-info'>
+                                                                <div className='card-content-other-info-3'>
+                                                                        <div className='card-content-other-info-1-key'>Weighted Score</div>
+                                                                        <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatings(limitToTwoDecimals(row.nonlinear))}</span>{limitToTwoDecimals(row.nonlinear)}</div>
+                                                                    </div>
                                                                     <div className='card-content-other-info-3'>
                                                                         <div className='card-content-other-info-1-key'>DPI Score</div>
                                                                         <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{row['Overall Accountability Rating']}</span><span>{limitToTwoDecimals(row['Overall Accountability Score'])}</span></div>
-                                                                    </div>
-                                                                    <div className='card-content-other-info-3'>
-                                                                        <div className='card-content-other-info-1-key'>Weighted Score</div>
-                                                                        <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatings(limitToTwoDecimals(row.nonlinear))}</span>{limitToTwoDecimals(row.nonlinear)}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -804,7 +803,7 @@ const HomePage = () => {
                             <Route path="/calculate-elgibility" element={fileData.cards.length > 0 && <EligibilityCalculator fileData={fileData} filters= {filters} schoolNames={pipeline} calculatedData = {renderCardData().calculatedData2}/>} />
                             <Route path="/general-analytics" element={fileData.cards.length > 0 && <GeneralAnalytics data={renderCardData().calculatedData2} setHideFilters = {setHideFilters}/>} />
                             <Route path="/geographical-analytics" element={fileData.cards.length > 0 && <GeographicalAnalytics data={fileData} filters= {filters} schoolNames={pipeline} calculatedData={renderCardData().calculatedData2} />} />
-                            <Route path="/compare-schools" element={fileData.cards.length > 0 && <SchoolComparisonContainer filters= {filters} schools={renderCardData().calculatedData2} />} />
+                            <Route path="/compare-schools" element={fileData.cards.length > 0 && <SchoolComparisonContainer filters= {filters} schools={renderCardData().calculatedData2} setHideFilters = {setHideFilters}/>} />
                             <Route path="/settings" element={fileData.cards.length > 0 && <ConfigManagement filters= {filters} schools={renderCardData().calculatedData2} />} />
                         </Routes>
                     </div>
