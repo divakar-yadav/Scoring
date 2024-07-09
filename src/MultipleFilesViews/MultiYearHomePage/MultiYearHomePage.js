@@ -770,7 +770,7 @@ const MultiYearHomePage = () => {
                                 </div>
                             )}
                             {!hideFilters &&  <div className='navbar_filters'>
-                                            <CheckboxList title="I'm looking for School Type" options={schoolTypes} checkedList={filters.schoolType} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
+                                            <CheckboxList title="I'm looking for School Type" pipeline = {filters.pipeline} options={schoolTypes} checkedList={filters.schoolType} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
                                             </div> }
                         </div>
                         <Routes>

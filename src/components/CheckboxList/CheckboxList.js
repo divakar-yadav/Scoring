@@ -1,7 +1,7 @@
 import React from 'react';
 import './CheckboxList.css';
 
-const CheckboxList = ({ title, options, onCheckboxChange, checkedList }) => {
+const CheckboxList = ({ title, options, onCheckboxChange, checkedList, pipeline }) => {
   return (
     <div className="checkbox-list">
       {/* <h3 className="checkbox-list-title">{title}</h3> */}
@@ -13,7 +13,7 @@ const CheckboxList = ({ title, options, onCheckboxChange, checkedList }) => {
                 type="checkbox" 
                 className="checkbox-input" 
                 onChange={() => onCheckboxChange('schoolType', option)} 
-                checked={checkedList.includes(option)}
+                checked={checkedList.includes(option) || option ==='Pipeline Schools' && pipeline}
               />
               <span className="checkbox-label">{option}</span>
             </label>
