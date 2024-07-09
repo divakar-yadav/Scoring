@@ -43,3 +43,8 @@
     background-color: #3246b7;
   }
   
+  .text-display {
+    margin: auto;
+    max-width: 600px;
+    margin-left: 0px;
+}
