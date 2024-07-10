@@ -112,3 +112,35 @@ img.UploadMultipleYears_card_delete_button_icon {
     flex-direction: column;
     justify-content: center;
 }
+.default_download_wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+span.default_download {
+    display: flex;
+    padding: 10px 20px;
+    background-color: #fff;
+    font-weight: 200;
+    color: #000;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    width: max-content;
+    margin: auto;
+    font-size: 12px;
+}
+.default_download_wrapper {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+img.default_download_icon {
+    width: 16px;
+    margin-left: 7px;
+}
+span.default_or {
+    padding: 9px;
+    margin-right: 10px;
+}

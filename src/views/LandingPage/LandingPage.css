@@ -173,8 +173,8 @@ span.landingpage_single_year_arrow {
     padding: 0;
 }
 .instructions_container li::before {
-    content: "✔️";
-    color: #4CAF50;
+    content: "•";
+    color: #000;
     margin-right: 10px;
 }
 .instructions_container h1 {

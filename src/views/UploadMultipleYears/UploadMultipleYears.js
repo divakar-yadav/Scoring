@@ -15,14 +15,14 @@ const UploadMultipleYears = () => {
     }, [cards]);
 
     const checkValidation = () => {
-        const isValid = cards.every(card => card.schoolData.length && Object.keys(card.mapping).length && card.pipeLineSchools.length);
+        const isValid = cards.every(card => card.schoolData.length && Object.keys(card.mapping).length);
         setIsProceedEnabled(isValid);
     };
 
     const handleAddCard = () => {
         const lastCard = cards[cards.length - 1];
-        if (!lastCard.schoolData.length || !Object.keys(lastCard.mapping).length || !lastCard.pipeLineSchools.length) {
-            alert('Please upload all three files before adding a new card.');
+        if (!lastCard.schoolData.length || !Object.keys(lastCard.mapping).length) {
+            alert('Please upload the data and mapping files before adding a new card.');
             return;
         }
 
@@ -74,12 +74,12 @@ const UploadMultipleYears = () => {
     };
 
     const handleDeleteCard = (id) => {
-        if(cards.length===1) {                            
+        if(cards.length === 1) {
             alert('At least 1 set of files is required to render the dashboard');
-            return
+            return;
         }
-            const filteredCards = cards.filter(card => card.id !== id);
-            setCards(filteredCards);
+        const filteredCards = cards.filter(card => card.id !== id);
+        setCards(filteredCards);
     };
 
     const handleNavigateHome = () => {

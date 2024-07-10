@@ -56,8 +56,15 @@
 .pagination {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
-    gap: 8px;
+    flex-direction: row;
+    width: max-content;
+    margin: auto;
+    flex-wrap: wrap;
+    /* background: #f3f3f3; */
+    border: 1px solid lightgray;
+    padding: 15px;
+    border-radius: 4px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 .page-button {
@@ -66,8 +73,9 @@
     margin: 4px;
     cursor: pointer;
     background-color: #f2f2f2;
-    min-width: 70px;
+    min-width: 50px;
     border-radius: 5px;
+    font-weight: 900;
 }
 
 .page-button.active {
@@ -490,4 +498,27 @@ span.card-content-other-info-1-rating {
 .navbar_filters {
     margin: auto;
     margin-top: 30px;
+}
+.rows-per-page {
+    /* margin: auto; */
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.rows-per-page label {
+    font-weight: 300;
+    font-size: 15px;
+    padding: 6px;
+}
+.rows-per-page select#rowsPerPage {
+    font-weight: 900;
+    border: 1px solid lightgray;
+    margin-left: 7px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+    min-width: 50px;
+    padding: 7px;
+    text-align: end;
 }

@@ -11,7 +11,7 @@ const UploadSingleYear = () => {
     const location = useLocation();
 
     useEffect(() => {
-        const allCardsHaveFiles = cards.every(card => card.schoolData.length > 0 && Object.keys(card.mapping).length > 0 && card.pipeLineSchools.length > 0);
+        const allCardsHaveFiles = cards.every(card => card.schoolData.length > 0 && Object.keys(card.mapping).length > 0);
         setIsProceedDisabled(!allCardsHaveFiles);
     }, [cards]);
 

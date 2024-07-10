@@ -24,6 +24,7 @@ import { useNavigate } from 'react-router-dom';
 const MultiYearHomePage = () => {
     const [fileData, setFileData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10); // Add state for rows per page
     const [filters, setFilters] = useState({
         schoolType: [],
         pipeline: false,
@@ -603,7 +604,6 @@ const MultiYearHomePage = () => {
         return { paginatedData: sortedData.slice(startIndex, endIndex), calculatedData: sortedData, calculatedData2: flattenedData, aggregatedData : aggregatedData };
     };
 
-    const rowsPerPage = 10;
     const totalPages = Math.ceil(renderCardData().calculatedData.length / rowsPerPage);
     const handleClick = (event, page) => {
         event.preventDefault();
@@ -655,7 +655,7 @@ const MultiYearHomePage = () => {
                     onClick={handlePrevious}
                     disabled={currentPage === 1}
                 >
-                    Previous
+                    Prev
                 </button>
                 {pageNumbers.map(page => (
                     <button
@@ -706,6 +706,12 @@ const MultiYearHomePage = () => {
     const handleNavigateHome = () => {
         navigate(`/`);
     };
+
+    const handleRowsPerPageChange = (event) => {
+        setRowsPerPage(parseInt(event.target.value));
+        setCurrentPage(1); // Reset to the first page whenever rows per page changes
+    };
+
     return (
         <div className='homepage'>
             {loading ? (
@@ -713,7 +719,7 @@ const MultiYearHomePage = () => {
             ) : (
                     <div className='school-cards'>
                                                 <div className='navigate_to_upload_initials' onClick={()=>{handleNavigateHome()}}>
-                            <span > &#x2190; Go back to Upload section</span>
+                            <span > &#x2190; Go to Upload section</span>
                             </div>
                         <div className='schools-utilities'>
                             {fileData.length > 0 && (
@@ -851,9 +857,21 @@ const MultiYearHomePage = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="pagination">
-                                                {renderPagination()}
+                                            <div className='pagination_rowsPerPage_wrapper'>
+                                                <div className="pagination">
+                                                    {renderPagination()}
+                                                </div>
+                                                <div className='rows-per-page'>
+                                                            <label htmlFor="rowsPerPage">Rows per page:</label>
+                                                            <select id="rowsPerPage" value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                                                                <option value={10}>10</option>
+                                                                <option value={20}>20</option>
+                                                                <option value={50}>50</option>
+                                                                <option value={renderCardData().calculatedData.length}>{renderCardData().calculatedData.length}</option>
+                                                            </select>
+                                                </div>
                                             </div>
+
                                         </>
                                     )}
                                 </React.Fragment>
