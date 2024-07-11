@@ -13,15 +13,16 @@ const jsonData = {
   "Overall Accountability Rating": "Overall Accountability Rating",
   "School Type": "School Type",
   "School Enrollment": "School Enrollment",
-  "School ELA Achievement Score": "ELA_Score",
-  "School Mathematics Achievement Score": "Math_Score",
-  "School ELA Growth Score": "ELA_Growth",
-  "School Mathematics Growth Score": "Math_Growth",
-  "School On-Track to Graduation Score": "Graduation_Score",
-  "Percent Economically Disadvantaged": "Percent_Disadvantaged"
-};
+  "School ELA Achievement Score": "School ELA Achievement Score",
+  "School Mathematics Achievement Score": "School Mathematics Achievement Score",
+  "School ELA Growth Score": "School ELA Growth Score",
+  "School Mathematics Growth Score": "School Mathematics Growth Score",
+  "School On-Track to Graduation Score": "School On-Track to Graduation Score",
+  "Percent Economically Disadvantaged": "Percent Economically Disadvantaged"
+}
 
-const textData = `Bruce Guadalupe
+const textData = 
+`Bruce Guadalupe
 Forest Home Elementary
 Milwaukee College Preparatory School -- 36th Street Campus
 Milwaukee College Preparatory School -- 38th Street
