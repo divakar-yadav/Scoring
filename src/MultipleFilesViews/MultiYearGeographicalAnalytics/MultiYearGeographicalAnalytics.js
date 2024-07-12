@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import 'ol/ol.css';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
@@ -20,7 +20,6 @@ import school_orange from '../../assets/school_orange.png';
 import school_blue from '../../assets/school_blue.png';
 
 const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
-
   const getUniqueYears = (data) => {
     const yearsSet = new Set();
     data.forEach(innerArray => {
@@ -35,6 +34,8 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames, filters }
   const [filteredData, setFilteredData] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [currentYear, setCurrentYear] = useState(uniqueYears[0]);
+  const [mapCenter, setMapCenter] = useState(fromLonLat([-87.93785615489992, 43.05715723734501]));
+  const mapRef = useRef(null);
 
   useEffect(() => {
     let initialSchoolTypes = filters.schoolType;
@@ -84,7 +85,6 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames, filters }
   const filterDataByYear = (data, year) => {
     return data.map(innerArray => innerArray.filter(school => school['School Year'] === year)).flat();
   };
-
 
   useEffect(() => {
     if (selectedTypes.length === 0) {
@@ -172,21 +172,35 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames, filters }
         source: vectorSource,
       });
 
-      const map = new Map({
-        target: 'map',
-        layers: [
-          new TileLayer({
-            source: new OSM(),
-          }),
-          vectorLayer,
-        ],
-        view: new View({
-          center: fromLonLat([-87.93785615489992, 43.05715723734501]), // Centered on Madison, WI
-          zoom: 14,
-        }),
-      });
+      if (mapRef.current) {
+        const view = mapRef.current.getView();
+        view.setCenter(mapCenter);
+        const layers = mapRef.current.getLayers().getArray();
+        mapRef.current.removeLayer(layers[layers.length - 1]);
+        mapRef.current.addLayer(vectorLayer);
+      } else {
+        const view = new View({
+          center: mapCenter,
+          zoom: 14, // Fixed zoom level
+        });
 
-      return map;
+        const map = new Map({
+          target: 'map',
+          layers: [
+            new TileLayer({
+              source: new OSM(),
+            }),
+            vectorLayer,
+          ],
+          view: view,
+        });
+
+        mapRef.current = map;
+
+        view.on('change:center', () => {
+          setMapCenter(view.getCenter());
+        });
+      }
     };
 
     const filteredDataByYear = filterDataByYear(calculatedData, currentYear);
@@ -201,36 +215,29 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames, filters }
     }
 
     setFilteredData(finalFilteredData);
-    const map = initializeMap(finalFilteredData);
-
-    return () => {
-      if (map) {
-        map.setTarget(null);
-      }
-    };
-  }, [currentYear, selectedTypes, calculatedData]);
+    initializeMap(finalFilteredData);
+  }, [currentYear, selectedTypes, calculatedData, mapCenter]);
 
   return (
     <div>
       <div className='navbar-filter-wrapper'>
-      <div className='eligibility-calculator-year-filter-2'>
-      <div className="school-count">
-        Number of schools: {filteredData.length}
-      </div>
-      <div className='year-filter-wrapper'>
-          {uniqueYears.map((item) => (
+        <div className='eligibility-calculator-year-filter-2'>
+          <div className="school-count">
+            Number of schools: {filteredData.length}
+          </div>
+          <div className='year-filter-wrapper'>
+            {uniqueYears.map((item) => (
               <div
                 key={item}
                 onClick={() => setCurrentYear(item)}
                 className='eligibility-calculator-year-filter-year'
-                style={currentYear === item ? { backgroundColor: '#3e4ee1', color: '#fff',fontWeight:600 } : null}
+                style={currentYear === item ? { backgroundColor: '#3e4ee1', color: '#fff', fontWeight: 600 } : null}
               >
                 {item}
               </div>
-            ))}  
-      </div>
-  
-      </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div id="map" className="map"></div>
@@ -239,5 +246,3 @@ const MultiYearGeographicalAnalytics = ({ calculatedData, schoolNames, filters }
 };
 
 export default MultiYearGeographicalAnalytics;
-
-

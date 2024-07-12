@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import 'ol/ol.css';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
@@ -22,7 +22,8 @@ import school_blue from '../../assets/school_blue.png';
 const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
   const [filteredData, setFilteredData] = useState(calculatedData);
   const [selectedTypes, setSelectedTypes] = useState([]);
-
+  const [mapCenter, setMapCenter] = useState(fromLonLat([-87.93785615489992, 43.05715723734501]));
+  const mapRef = useRef(null);
 
   useEffect(() => {
     let initialSchoolTypes = filters.schoolType;
@@ -38,8 +39,6 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
 
     setFilteredData(filtered);
   }, [filters, calculatedData, schoolNames]);
-
-
 
   const getPointer = (score) => {
     if (score < 40) {
@@ -97,6 +96,7 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
         console.error('Convex hull could not be generated. Ensure that the input data is correct and non-empty.');
         return null;
       }
+
       const features = schoolPoints.map((school) => {
         const feature = new Feature({
           geometry: new Point(fromLonLat([school.properties.lon, school.properties.lat])),
@@ -145,21 +145,35 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
         source: vectorSource,
       });
 
-      const map = new Map({
-        target: 'map',
-        layers: [
-          new TileLayer({
-            source: new OSM(),
-          }),
-          vectorLayer,
-        ],
-        view: new View({
-          center: fromLonLat([-87.93785615489992, 43.05715723734501]), // Centered on Madison, WI
-          zoom: 14,
-        }),
-      });
+      if (mapRef.current) {
+        const view = mapRef.current.getView();
+        view.setCenter(mapCenter);
+        const layers = mapRef.current.getLayers().getArray();
+        mapRef.current.removeLayer(layers[layers.length - 1]);
+        mapRef.current.addLayer(vectorLayer);
+      } else {
+        const view = new View({
+          center: mapCenter,
+          zoom: 14, // Fixed zoom level
+        });
 
-      return map;
+        const map = new Map({
+          target: 'map',
+          layers: [
+            new TileLayer({
+              source: new OSM(),
+            }),
+            vectorLayer,
+          ],
+          view: view,
+        });
+
+        mapRef.current = map;
+
+        view.on('change:center', () => {
+          setMapCenter(view.getCenter());
+        });
+      }
     };
 
     console.log('Initializing map with filtered data:', filteredData);
@@ -170,7 +184,7 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
         map.setTarget(null);
       }
     };
-  }, [filteredData]);
+  }, [filteredData, mapCenter]);
 
   useEffect(() => {
     if (selectedTypes.length === 0) {
@@ -185,20 +199,6 @@ const GeographicalAnalytics = ({ calculatedData, schoolNames, filters }) => {
 
   return (
     <div>
-      {/* <div className="filter-container">
-        {schoolTypes.map((type) => (
-          <div key={type} className="filter-item">
-            <input
-              type="checkbox"
-              id={type}
-              value={type}
-              checked={selectedTypes.includes(type)}
-              onChange={() => handleTypeChange(type)}
-            />
-            <label htmlFor={type}>{type}</label>
-          </div>
-        ))}
-      </div> */}
       <div id="map" className="map"></div>
     </div>
   );
