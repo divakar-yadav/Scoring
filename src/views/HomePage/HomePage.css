@@ -491,3 +491,25 @@ span.card-content-other-info-1-rating {
     padding: 7px;
     text-align: end;
 }
+.export-button-sort-button-wrapper {
+    display: flex;
+}
+.filter-header-sort select {
+    border: none;
+    font-size: 12px;
+    outline: none;
+    max-width: 129px;
+}
+.export-button-wrapper {
+    margin-right: 13px;
+}
+button.export-button {
+    padding: 7px 21px;
+    background-color: #3e4ee1;
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+}
+img.export-icon {
+    width: 15px;
+}

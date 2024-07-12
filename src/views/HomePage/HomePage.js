@@ -18,6 +18,8 @@ import SchoolDetail from '../../views/SchoolDetail/SchoolDetail';
 import CheckboxList from '../../components/CheckboxList/CheckboxList';
 import ConfigManagement from '../ConfigManagement/ConfigManagement';
 import { useNavigate } from 'react-router-dom';
+import * as XLSX from 'xlsx';
+import export_icon from '../../assets/export.png'
 
 const HomePage = () => {
     const [fileData, setFileData] = useState({cards: [{ id: 1, schoolData: [], mapping: {}, pipeLineSchools: [], year: '' }]});
@@ -204,7 +206,7 @@ const HomePage = () => {
         ["Notre Dame School of Milwaukee", 43.020480, -87.917973],
         ["Obama School of Career and Technical Education", 43.109729, -87.967732],
         ["Our Lady Queen of Peace", 43.019600, -87.925091],
-        ["Parkview Elementary", 43.307120, -88.000766],
+        ["Parkview Elementary", 43.112150056436704, -88.04781532718097],
         ["Pathways High", 43.038809, -87.952321],
         ["Penfield Montessori Academy", 43.063391, -87.898383],
         ["Pilgrim Lutheran School", 43.051212, -87.942897],
@@ -255,7 +257,7 @@ const HomePage = () => {
         ["Tamarack Waldorf School", 43.057107, -87.945741],
         ["Tenor High", 43.042403, -87.915328],
         ["The City School", 43.075590, -87.911860],
-        ["Thoreau Elementary", 43.045950, -89.442373],
+        ["Thoreau Elementary", 43.161229400295845, -87.98436884042157],
         ["Thurston Woods Elementary", 43.125848, -87.955277],
         ["Townsend Street Elementary", 43.080511, -87.966553],
         ["Trowbridge Street School of Great Lakes Studies", 42.991927, -87.885273],
@@ -268,7 +270,7 @@ const HomePage = () => {
         ["Wedgewood Park School", 42.979458, -87.995618],
         ["Westside Academy", 43.055710, -87.958169],
         ["Whitman Elementary", 42.968453, -87.982215],
-        ["Whittier Elementary", 42.550521, -87.870593],
+        ["Whittier Elementary", 42.964962530444524, -87.91422987676967],
         ["WHS Information Technology", 43.065222, -87.968280],
         ["Wisconsin Conservatory of Lifelong Learning", 43.043748, -87.927992],
         ["Wisconsin Lutheran High School", 43.029238, -87.964573],
@@ -653,13 +655,59 @@ const HomePage = () => {
         setRowsPerPage(parseInt(event.target.value));
         setCurrentPage(1); // Reset to the first page whenever rows per page changes
     };
+
+
+    const exportToExcel = () => {
+
+        const columnsToInclude = [
+            "School Name",
+            "Overall Accountability Score",
+            "Overall Accountability Rating",
+            "nonlinear",
+            "average",
+            "School Enrollment",
+            "ELA_achievement",
+            "math_achievement",
+            "ELA_growth",
+            "math_growth",
+            "graduation",
+            "Percent Economically Disadvantaged",
+            "ELA_achievement_score",
+            "math_achievement_score",
+            "ELA_growth_score",
+            "math_growth_score",
+            "graduation_score",
+            "School Type"
+        ];
+
+        const dataToExport = renderCardData().calculatedData.map(row => {
+            let filteredRow = {};
+            columnsToInclude.forEach(col => {
+                filteredRow[col] = row[col];
+            });
+            return filteredRow;
+        });
+    
+        const ws = XLSX.utils.json_to_sheet(dataToExport);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "School Data");
+    
+        let fileName = filters.schoolType.length > 0  || filters.pipeline  ? 'school_data_' + filters.schoolType.join('_').replace(/\s+/g, '_') : 'school_data_all';
+        if(filters.pipeline ){
+            fileName = fileName + '_' + 'pipeline_schools'
+        }
+        XLSX.writeFile(wb, `${fileName}.xlsx`);
+    };
+
+      
+
     return (
         <div className='homepage'>
             {loading ? (
                 <Loader />
             ) : (
                     <div className='school-cards'>
-                                                <div className='navigate_to_upload_initials' onClick={()=>{handleNavigateHome()}}>
+                            <div className='navigate_to_upload_initials' onClick={()=>{handleNavigateHome()}}>
                             <span > &#x2190; Go to Upload section</span>
                             </div>
                         <div className='schools-utilities'>
@@ -736,21 +784,23 @@ const HomePage = () => {
                                                             ))}
                                                         </div>
                                                     </div>
-                                                    {/* <div className='navbar_filters'>
-                                                    <CheckboxList title="I'm looking for School Type" options={schoolTypes} onCheckboxChange = {handleFilterChange} filterType={'schoolType'} />
-                                                </div> */}
-                                                    <div className='filter-header-sort'>
-                                                        <div className='filter-header-sort-text'>Sort By:</div>
-                                                        <select name="locationType" onChange={(e)=>handleSorting(e)}>
-                                                            <option value="Alphabetically (A-Z)">{`Alphabetically (A-Z)`}</option>
-                                                            <option value="Alphabetically (Z-A)">{`Alphabetically (Z-A)`}</option>
-                                                            <option value="Non Linear Score (low to high)">{`Weighted Score (low to high)`}</option>
-                                                            <option value="Non Linear Score (high to low)">{`Weighted Score (high to low)`}</option>
-                                                            <option value="DPI (low to high)">{`DPI (low to high)`}</option>
-                                                            <option value="DPI (high to low)">{`DPI (high to low)`}</option>
-                                                            <option value="Enrollment (low to high)">{`Enrollment (low to high)`}</option>
-                                                            <option value="Enrollment (high to low)">{`Enrollment (high to low)`}</option>
-                                                        </select>
+                                                    <div className='export-button-sort-button-wrapper'>
+                                                        <div className='export-button-wrapper'>
+                                                                <button className='export-button' onClick={exportToExcel}>Export XLSX <img className='export-icon' src = {export_icon}/></button>
+                                                        </div>
+                                                        <div className='filter-header-sort'>
+                                                            <div className='filter-header-sort-text'>Sort By:</div>
+                                                            <select name="locationType" onChange={(e)=>handleSorting(e)}>
+                                                                <option value="Alphabetically (A-Z)">{`Alphabetically (A-Z)`}</option>
+                                                                <option value="Alphabetically (Z-A)">{`Alphabetically (Z-A)`}</option>
+                                                                <option value="Non Linear Score (low to high)">{`Weighted Score (low to high)`}</option>
+                                                                <option value="Non Linear Score (high to low)">{`Weighted Score (high to low)`}</option>
+                                                                <option value="DPI (low to high)">{`DPI (low to high)`}</option>
+                                                                <option value="DPI (high to low)">{`DPI (high to low)`}</option>
+                                                                <option value="Enrollment (low to high)">{`Enrollment (low to high)`}</option>
+                                                                <option value="Enrollment (high to low)">{`Enrollment (high to low)`}</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
