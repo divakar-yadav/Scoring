@@ -28,7 +28,7 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData, filters 
             processData(fileData, schoolNames, selectedSchoolTypes);
         }
 
-    }, [fileData, schoolNames, selectedSchoolTypes]);
+    }, [fileData, schoolNames, calculatedData, selectedSchoolTypes]);
 
     const pipelineSchools1 = [
         "Bruce Guadalupe",
