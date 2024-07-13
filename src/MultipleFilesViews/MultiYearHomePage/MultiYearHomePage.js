@@ -378,7 +378,23 @@ const MultiYearHomePage = () => {
 
         return category;
     }
+    const getRatingsAvgDpi = (score) => {
+        let category = '';
 
+        if (score < 48) {
+            category = 'Fails to Meet Expectations';
+        } else if (score >= 48 && score < 58) {
+            category = 'Meets Few Expectations';
+        } else if (score >= 58 && score < 70) {
+            category = 'Meets Expectations';
+        } else if (score >= 70 && score < 83) {
+            category = 'Exceeds Expectations';
+        } else if (score >= 83) {
+            category = 'Significantly Exceeds Expectations';
+        }
+
+        return category;
+    }
     const aggregateSchoolsByType = (data) => {
         const schools = [];
 
@@ -843,7 +859,7 @@ const MultiYearHomePage = () => {
                                                                     </div>
                                                                     <div className='card-content-other-info-3'>
                                                                         <div className='card-content-other-info-1-key'>Avg. DPI Score</div>
-                                                                        <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatings(row['average_dpi'])}</span><span>{limitToTwoDecimals(row['average_dpi'])}</span></div>
+                                                                        <div className='card-content-other-info-1-value'><span className='card-content-other-info-1-rating'>{getRatingsAvgDpi(row['average_dpi'])}</span><span>{limitToTwoDecimals(row['average_dpi'])}</span></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
