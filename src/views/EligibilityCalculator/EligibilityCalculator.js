@@ -30,56 +30,13 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData, filters 
 
     }, [fileData, schoolNames, calculatedData, selectedSchoolTypes]);
 
-    const pipelineSchools1 = [
-        "Bruce Guadalupe",
-        "Forest Home Elementary",
-        "Milwaukee College Preparatory School -- 36th Street Campus",
-        "Milwaukee College Preparatory School -- 38th Street",
-        "Milwaukee College Preparatory School -- Lloyd Street",
-        "Milwaukee College Preparatory School: Lola Rowe North Campus",
-        "Milwaukee Environmental Science Academy",
-        "Notre Dame School of Milwaukee",
-        "Prince of Peace",
-        "Rocketship Southside Community Prep",
-        "Rocketship Transformation Prep",
-        "Saint Marcus Lutheran School",
-        "Stellar Collegiate Charter School",
-        "United Community Center Acosta Middle School",
-        "Wedgewood Park School",
-        "Carmen High School of Science and Technology South Campus",
-        "Carmen High School of Science and Technology Southeast Campus",
-        "Carmen Middle/High School of Science and Technology Northwest Campus",
-        "Carmen Middle School South",
-        "Cristo Rey Jesuit Milwaukee High School",
-        "Dr Howard Fuller Collegiate Academy",
-        "King International",
-        "Reagan College Preparatory High",
-        "HAPA-Hmong American Peace Academy K3-12",
-        "Milwaukee Academy of Science",
-        "Saint Augustine Preparatory Academy",
-        "Kingdom Prep Lutheran High School",
-        "Pilgrim Lutheran School",
-        "Golda Meir School"
-    ];
-    const handleCheckboxChange = (event) => {
-        const { name, checked } = event.target;
 
-        setSelectedSchoolTypes((prevSelectedSchoolTypes) => {
-            if (checked ) {
-                return [...prevSelectedSchoolTypes, name];
-            } 
-            else {
-                return prevSelectedSchoolTypes.filter((type) => type !== name);
-            }
-        });
-
-    };
     const limitToTwoDecimals = (num) => {
         return parseFloat(num.toFixed(2));
     };
+
     const getRatings = (score) => {
         let category = '';
-
         if (score < 40) {
             category = 'Fails to Meet Expectations';
         } else if (score >= 40 && score < 50) {
@@ -94,7 +51,7 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData, filters 
 
         return category;
     }
-    const filteredSchools = calculatedData.filter(row =>  (filters.schoolType.length === 0 || filters.schoolType.includes(row['School Type']) || selectedSchoolTypes.includes('Pipeline Schools') && pipelineSchools.includes(row['School Name']) ))
+    const filteredSchools = calculatedData.filter(row =>  (selectedSchoolTypes.length === 0 || selectedSchoolTypes.includes(row['School Type']) || selectedSchoolTypes.includes('Pipeline Schools') && pipelineSchools.includes(row['School Name']) ))
 
     const processData = (data, schoolNames, selectedSchoolTypes) => {
         const colors = {
@@ -106,16 +63,6 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData, filters 
             'NR-DATA': 'gray'
         };
 
-        const features = [
-            'School Name', 'Overall Accountability Score', 'Overall Accountability Rating',
-            'School Type', 'School Enrollment', 'School ELA Achievement Score',
-            'School Mathematics Achievement Score', 'School ELA Growth Score',
-            'School Mathematics Growth Score', 'School On-Track to Graduation Score',
-            'Percent Economically Disadvantaged', 'Percent American Indian or Alaskan Native',
-            'Percent Asian', 'Percent Black or African American', 'Percent Hispanic/Latino',
-            'Percent Native Hawaiian or Other Pacific Islander', 'Percent White',
-            'Percent Two or More Races', 'City'
-        ];
 
         const plotData1 = calculatedData.filter(row =>  (selectedSchoolTypes.length === 0 || selectedSchoolTypes.includes(row['School Type']) || selectedSchoolTypes.includes('Pipeline Schools') && pipelineSchools.includes(row['School Name']) )).map(row => ({
             x: row['Percent Economically Disadvantaged'] * 100,
@@ -302,33 +249,12 @@ const EligibilityCalculator = ({ fileData, schoolNames, calculatedData, filters 
         setChartOptions2(options2);
     };
 
-    const schoolTypes = [
-        'Elementary School',
-        'High School',
-        'Elementary/Secondary School',
-        'Middle School',
-        'Pipeline Schools',
-    ];
 
     return (
         <div className='eligibility-calculator'>
             <div className='eligibility-calculator-navbar'><span>No of schools {filteredSchools.length} </span></div>
             <div className='filters-chart-wrapper'>
             <div className="checkbox-filters">
-                {/* <div className='checkbox-filters-title-text'>I'm looking for School Type</div>
-                <div className='checkbox-filters-school-types'>
-                {schoolTypes.map((type) => (
-                        <label key={type}>
-                            <input
-                                type="checkbox"
-                                name={type}
-                                checked={selectedSchoolTypes.includes(type)}
-                                onChange={handleCheckboxChange}
-                            />
-                        <span>{type}</span> 
-                        </label>
-                    ))}
-                </div> */}
                 <div className="color-map">
                             <div className='color-map-text'>Color Map</div>
                             <div><span style={{ backgroundColor: 'green' }}></span>Significantly Exceeds Expectations</div>
