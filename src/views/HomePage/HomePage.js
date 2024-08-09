@@ -284,7 +284,7 @@ const HomePage = () => {
     const {state} = useLocation();
 
     useEffect(()=>{
-        if(state!==null){
+        if(state!==null && state.hasOwnProperty('cards')){
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
@@ -294,17 +294,17 @@ const HomePage = () => {
                 else{
                     setPipeline(pipeLineSchools)
                 }
-                const updatedCards = state.cards.map(card => {
-                    const updatedSchoolData = card.schoolData.map(row => {
-                        const school = schoolsLatLong.find(school => school[0] === row['School Name']);
-                        if (school) {
-                            return { ...row, Lat: school[1], Long: school[2] };
-                        }
-                        return { ...row, Lat: null, Long: null };
+                    const updatedCards = state.cards.map(card => {
+                        const updatedSchoolData = card.schoolData.map(row => {
+                            const school = schoolsLatLong.find(school => school[0] === row['School Name']);
+                            if (school) {
+                                return { ...row, Lat: school[1], Long: school[2] };
+                            }
+                            return { ...row, Lat: null, Long: null };
+                        });
+                        return { ...card, schoolData: updatedSchoolData };
                     });
-                    return { ...card, schoolData: updatedSchoolData };
-                });
-                setFileData({ cards: updatedCards });
+                    setFileData({ cards: updatedCards });
             }, 1000);
         }
 
