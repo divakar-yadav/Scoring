@@ -699,7 +699,7 @@ const HomePage = () => {
         XLSX.writeFile(wb, `${fileName}.xlsx`);
     };
 
-      
+      console.log(fileData,"-----fileData---")
 
     return (
         <div className='homepage'>
@@ -867,7 +867,7 @@ const HomePage = () => {
                             } />
                             <Route path="/school" element={<SchoolDetail />} />
                             <Route path="/calculate-elgibility" element={fileData.cards.length > 0 && <EligibilityCalculator fileData={fileData} filters= {filters} schoolNames={pipeline} calculatedData = {renderCardData().calculatedData2}/>} />
-                            <Route path="/general-analytics" element={fileData.cards.length > 0 && <GeneralAnalytics data={renderCardData().calculatedData2} setHideFilters = {setHideFilters}/>} />
+                            <Route path="/general-analytics" element={fileData.cards.length > 0 && <GeneralAnalytics data={renderCardData().calculatedData2} mapping = {fileData.cards[0].mapping} setHideFilters = {setHideFilters}/>} />
                             <Route path="/geographical-analytics" element={fileData.cards.length > 0 && <GeographicalAnalytics data={fileData} filters= {filters} schoolNames={pipeline} calculatedData={renderCardData().calculatedData2} />} />
                             <Route path="/compare-schools" element={fileData.cards.length > 0 && <SchoolComparisonContainer filters= {filters} schools={renderCardData().calculatedData2} setHideFilters = {setHideFilters}/>} />
                             <Route path="/settings" element={fileData.cards.length > 0 && <ConfigManagement filters= {filters} schools={renderCardData().calculatedData2} />} />

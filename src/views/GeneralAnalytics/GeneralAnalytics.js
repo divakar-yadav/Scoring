@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import './GeneralAnalytics.css';
 
-const GeneralAnalytics = ({ data, setHideFilters }) => {
+const GeneralAnalytics = ({ data, setHideFilters, mapping }) => {
 
 
 
@@ -17,6 +17,14 @@ const GeneralAnalytics = ({ data, setHideFilters }) => {
         }
 )
 
+// recent bug fix on 8 Dec 2024
+
+// 1- School Achievement Score --> Achievement Score [Done]
+// 2- School Growth Score --> Growth Score [Done]
+// 3- School Percent Proficient ELA 2023 --> Percent Proficient ELA 2023
+// 4- School Percent Proficient Mathematics 2023 --> Percent Proficient Mathematics 2023
+console.log(data, "-----data-----")
+console.log(mapping, "-----mapping-----")
 
     const getTooltipInfo = (row) => `
     <b>School Name:</b> ${row['School Name']}<br>
@@ -100,10 +108,11 @@ const GeneralAnalytics = ({ data, setHideFilters }) => {
         series: [{
             name: 'Schools',
             color: 'rgba(119, 152, 191, .5)',
-            data: data.map(item => [item['School Achievement Score'], item['School Growth Score']])
+            data: data.map(item => [item[mapping['School Achievement Score']], item[mapping['School Growth Score']]])
         }]
     };
 
+  
     // Chart 3: Percent Proficient ELA vs. Percent Proficient Mathematics (for the year 2023)
     const chart3Options = {
         chart: {
@@ -133,10 +142,11 @@ const GeneralAnalytics = ({ data, setHideFilters }) => {
         series: [{
             name: 'Schools',
             color: 'rgba(34, 34, 34, .5)',
-            data: data.map(item => [item['School Percent Proficient ELA 2023'], item['School Percent Proficient Mathematics 2023']])
+            data: data.map(item => [item[mapping['School Percent Proficient ELA 2023']], item[ mapping['School Percent Proficient Mathematics 2023']]])
         }]
     };
-
+   
+   
     // Chart 4: School Type Distribution
     const schoolTypeCounts = data.reduce((acc, item) => {
         acc[item['School Type']] = (acc[item['School Type']] || 0) + 1;
