@@ -12,17 +12,17 @@ const jsonData = {
   "Overall Accountability Score": "Overall Accountability Score",
   "Overall Accountability Rating": "Overall Accountability Rating",
   "School Type": "School Type",
-  "School Enrollment": "Enrollment",
-  "School ELA Achievement Score": "ELA Achievement Score",
-  "School Mathematics Achievement Score": "Mathematics Achievement Score",
-  "School ELA Growth Score": "ELA Growth Score",
-  "School Mathematics Growth Score": "Mathematics Growth Score",
-  "School On-Track to Graduation Score": "On-Track to Graduation Score",
+  "School Enrollment": "School Enrollment",
+  "School ELA Achievement Score": "School ELA Achievement Score",
+  "School Mathematics Achievement Score": "School Mathematics Achievement Score",
+  "School ELA Growth Score": "School ELA Growth Score",
+  "School Mathematics Growth Score": "School Mathematics Growth Score",
+  "School On-Track to Graduation Score": "School On-Track to Graduation Score",
   "Percent Economically Disadvantaged": "Percent Economically Disadvantaged",
-  "School Achievement Score": "Achievement Score",
-  "School Growth Score": "Growth Score",
-  "School Percent Proficient ELA 2023": "Percent Proficient ELA 2023",
-  "School Percent Proficient Mathematics 2023": "Percent Proficient Mathematics 2023"
+  "School Achievement Score": "School Achievement Score",
+  "School Growth Score": "School Growth Score",
+  "School Percent Proficient ELA 2023": "School Percent Proficient ELA 2023",
+  "School Percent Proficient Mathematics 2023": "School Percent Proficient Mathematics 2023"
 }
 
 const textData = 
