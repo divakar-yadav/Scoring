@@ -182,24 +182,27 @@ span.landingpage_single_year_arrow {
 }
 .instructions_container h2 {
     font-size: 15px;
-    font-weight: 400;
+    font-weight: 700;
 }
-.instructions_container p{
+.instructions_container p {
     font-size: 15px;
+    font-weight: 700;
 }
 .instruction_heading {
     font-size: 20px;
     color: #3e4ee1;
 }
-.instruction_heading_a  {
+.instruction_heading_a {
     margin-top: 30px;
     margin-bottom: 30px;
+    font-weight: 900;
 }
 .instruction_heading {
     font-size: 15px;
     color: #3e4ee1;
     margin-bottom: 15px;
     margin-top: 90px;
+    font-weight: 700;
 }
 .text-display {
     font-family: 'Courier New', Courier, monospace;
@@ -218,3 +221,26 @@ span.landingpage_single_year_arrow {
 .copy-button {
     right: 112px;
 }
+.instructions_container ul li {
+    color: #000;
+}
+.key-val-text_value {
+    color: #62a1ae;
+}
+.key-val-text_value {
+    color: #62a1ae;
+}
+.key-val-text {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+    font-size: 16px;
+    font-weight: 700;
+    color: #d56ba8;
+}
+.markdown-container {
+    background-color: white !important;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }

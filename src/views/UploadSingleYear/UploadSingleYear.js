@@ -32,7 +32,17 @@ const UploadSingleYear = () => {
                     } else if (type === 'mapping' && (file.type === 'application/json' || file.type === 'text/plain')) {
                         try {
                             const jsonData = JSON.parse(event.target.result);
-                            updatedCard = { ...card, mapping: jsonData };
+                            const { k1, k2, k3  } = jsonData;
+                            if (typeof k1 === 'undefined' || typeof k2 === 'undefined' || typeof k3 === 'undefined') {
+                                alert('Mapping file must include k1, k2, and k3 fields');
+                            }
+                            else if (typeof k1 !== 'number' || typeof k2 !== 'number' || typeof k3 !== 'number') {
+                                alert('Mapping file fields k1, k2, and k3 must be numbers');
+                            }
+                            else{
+                                updatedCard = { ...card, mapping: jsonData };
+                            }
+
                         } catch (error) {
                             alert('Invalid JSON content in the mapping file');
                         }

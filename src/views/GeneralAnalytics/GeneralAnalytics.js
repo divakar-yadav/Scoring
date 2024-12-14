@@ -120,12 +120,12 @@ console.log(mapping, "-----mapping-----")
             zoomType: 'xy'
         },
         title: {
-            text: 'Percent Proficient ELA vs. Percent Proficient Mathematics (2023)'
+            text: 'Percent Proficient ELA vs. Percent Proficient Mathematics'
         },
         xAxis: {
             title: {
                 enabled: true,
-                text: 'Percent Proficient ELA (2023)'
+                text: 'Percent Proficient ELA'
             },
             startOnTick: true,
             endOnTick: true,
@@ -133,7 +133,7 @@ console.log(mapping, "-----mapping-----")
         },
         yAxis: {
             title: {
-                text: 'Percent Proficient Mathematics (2023)'
+                text: 'Percent Proficient Mathematics'
             }
         },
         credits: {
@@ -142,7 +142,7 @@ console.log(mapping, "-----mapping-----")
         series: [{
             name: 'Schools',
             color: 'rgba(34, 34, 34, .5)',
-            data: data.map(item => [item[mapping['School Percent Proficient ELA 2023']], item[ mapping['School Percent Proficient Mathematics 2023']]])
+            data: data.map(item => [item[mapping['School Percent Proficient ELA {Year}']], item[ mapping['School Percent Proficient Mathematics {Year}']]])
         }]
     };
    

@@ -449,9 +449,9 @@ const HomePage = () => {
         });
         return data;
     };
-
+    // k1 = 0.6, k2 = 0.3, k3 = 0.2
     const calculateNonlinear = (data) => {
-        const f = (achievement, growth, ecd, graduation, schoolName, k1 = 0.6, k2 = 0.3, k3 = 0.2) => {
+        const f = (achievement, growth, ecd, graduation, schoolName, k1 = fileData.cards[0].mapping['k1'], k2 = fileData.cards[0].mapping['k2'], k3 = fileData.cards[0].mapping['k3']) => {
             return 1 / (1 + Math.exp(-(k1 * achievement + k2 * growth * ecd + k3 * graduation * ecd)));
         };
 
@@ -459,7 +459,6 @@ const HomePage = () => {
             const achievement = (parseFloat(row['ELA_achievement_score']) + parseFloat(row['math_achievement_score'])) / 2.0;
             const growth = (parseFloat(row['ELA_growth_score']) + parseFloat(row['math_growth_score'])) / 2.0;
             const nonlinear = f(achievement, growth, parseFloat(row['Percent Economically Disadvantaged']), parseFloat(row['graduation_score']), row['School Name']) * 100.0;
-
             return {
                 ...row,
                 nonlinear
@@ -699,7 +698,6 @@ const HomePage = () => {
         XLSX.writeFile(wb, `${fileName}.xlsx`);
     };
 
-      console.log(fileData,"-----fileData---")
 
     return (
         <div className='homepage'>

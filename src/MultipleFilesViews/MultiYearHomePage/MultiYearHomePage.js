@@ -455,8 +455,12 @@ const MultiYearHomePage = () => {
         return data;
     };
 
-    const calculateNonlinear = (data) => {
-        const f = (achievement, growth, ecd, graduation, schoolName, k1 = 0.6, k2 = 0.3, k3 = 0.2) => {
+
+    // k1 = 0.6, k2 = 0.3, k3 = 0.2
+
+    const calculateNonlinear = (data, file) => {
+
+        const f = (achievement, growth, ecd, graduation, schoolName, k1 = file.mapping['k1'], k2 = file.mapping['k2'], k3 = file.mapping['k3']) => {
             return 1 / (1 + Math.exp(-(k1 * achievement + k2 * growth * ecd + k3 * graduation * ecd)));
         };
 
@@ -501,7 +505,8 @@ const MultiYearHomePage = () => {
         const aggregatedData = aggregateSchoolsByType(filteredData2);
 
         const standardizedData = aggregatedData.map(group => toStdRange(group)).flat();
-        const calculatedData = calculateNonlinear(standardizedData);
+        console.log(standardizedData,"-----------standardizedData-----")
+        const calculatedData = calculateNonlinear(standardizedData, file);
 
         return calculatedData.map(row => ({
             ...row,
@@ -603,7 +608,7 @@ const MultiYearHomePage = () => {
     // Output the filtered data
     const renderCardData = () => {
         let aggregatedData = [];
-
+        console.log(fileData,"-----fileData----")
         fileData.forEach((file)=>{
             const filteredData = filterDataOverAll(file, pipeline);
             const calculatedData = addCalculatedFields(filteredData, file);
