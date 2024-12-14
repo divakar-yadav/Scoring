@@ -142,7 +142,7 @@ console.log(mapping, "-----mapping-----")
         series: [{
             name: 'Schools',
             color: 'rgba(34, 34, 34, .5)',
-            data: data.map(item => [item[mapping['School Percent Proficient ELA {Year}']], item[ mapping['School Percent Proficient Mathematics {Year}']]])
+            data: data.map(item => [item[mapping['School Percent Proficient ELA']], item[ mapping['School Percent Proficient Mathematics']]])
         }]
     };
    
