@@ -2,6 +2,7 @@
   "name": "scoring",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/scoring",
   "dependencies": {
     "@highcharts/map-collection": "^2.1.0",
     "@testing-library/jest-dom": "^5.17.0",
