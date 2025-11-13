@@ -9,7 +9,7 @@ import MultiYearHomePage from './MultipleFilesViews/MultiYearHomePage/MultiYearH
 
 const App = ()=> {
   return (
-    <Router>
+    <Router basename="/scoring">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/single-year" element={<UploadSingleYear />} />
